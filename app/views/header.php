@@ -11,7 +11,7 @@
       <ul class="nav nav-pills">
       <li class="nav-item"><a href="/" class="nav-link">Home</a></li>
         <li class="nav-item"><a href="/about" class="nav-link">About</a></li>
-        <li class="nav-item"><a href="/article" class="nav-link">Manage articles</a></li>
+        <li class="nav-item"><a href="/game" class="nav-link">Manage games</a></li>
       </ul>
     </header>
   </div>

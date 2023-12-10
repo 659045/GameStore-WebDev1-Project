@@ -3,16 +3,16 @@ namespace App\Controllers;
 
 class HomeController
 {
-    private $articleService;
+    private $gameService;
 
     function __construct()
     {
-        $this->articleService = new \App\Services\ArticleService();
+        $this->gameService = new \App\Services\GameService();
     }
 
     public function index()
     {
-        $model = $this->articleService->getAll();
+        $model = $this->gameService->getAll();
         require __DIR__ . '/../views/home/index.php';
     }
 
