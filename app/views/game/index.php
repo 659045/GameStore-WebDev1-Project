@@ -14,7 +14,7 @@ include __DIR__ . '/../header.php';
     </thead>
     <tbody>
         <?php
-        foreach ($model as $game) {
+        foreach ($games as $game) {
             echo "<tr>";
             echo "<td>$game->title</td>";
             echo "<td>$game->description</td>";

@@ -6,7 +6,7 @@ class GameRepository extends Repository {
 
     function getAll() {
 
-        $stmt = $this->connection->prepare("SELECT * FROM games");
+        $stmt = $this->connection->prepare("SELECT * FROM game");
         $stmt->execute();
 
         $stmt->setFetchMode(PDO::FETCH_CLASS, 'Game');
@@ -19,7 +19,7 @@ class GameRepository extends Repository {
     public function insert($game) {
 
         $stmt = $this->connection->prepare(
-            "INSERT INTO games (title, description, price) VALUES (:title, :description, :price)"
+            "INSERT INTO game (title, description, price) VALUES (:title, :description, :price)"
         );
         
         $results = $stmt->execute([

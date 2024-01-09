@@ -8,11 +8,31 @@ class GameController extends Controller {
 
     function __construct() {
 
-        $this->gameService = new GameService();
+        $this->gameService = new GameService;
     }
 
     public function index() {
         $games = $this->gameService->getAll();
-        $this->displayView($games);
+
+        require __DIR__ . '/../views/game/index.php';
+
+        //TODO fix displayView
+        // $this->displayView($games);
+    }
+
+    public function create() {
+        require __DIR__ . '/../views/game/create.php';
+
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            $json = file_get_contents('php://input');
+            $object = json_decode($json);
+
+            $game = new Game();
+            $game->setTitle($object->title);
+            $game->setDescription($object->description);
+            $game->setPrice($object->price);
+
+            $this->gameService->insert($game);
+        }
     }
 }

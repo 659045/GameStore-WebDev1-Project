@@ -1,10 +1,10 @@
 <?php
 
 class Game implements JsonSerializable {
-    private int $id;
-    private string $title;
-    private string $description;
-    private float $price;
+    public int $id;
+    public string $title;
+    public string $description;
+    public float $price;
 
     public function getId(): int {
         return $this->id;
@@ -38,7 +38,7 @@ class Game implements JsonSerializable {
         $this->price = $price;
     }
 
-    public function jsonSerialize() {
+    public function jsonSerialize(): mixed {
         return [
             'id' => $this->id,
             'title' => $this->title,
