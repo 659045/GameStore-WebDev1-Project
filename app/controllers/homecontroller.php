@@ -1,13 +1,13 @@
 <?php
-namespace App\Controllers;
+require __DIR__ . '/controller.php';
 
-class HomeController
+class HomeController extends Controller
 {
     private $gameService;
 
     function __construct()
     {
-        $this->gameService = new \App\Services\GameService();
+        $this->gameService = new GameService();
     }
 
     public function index()

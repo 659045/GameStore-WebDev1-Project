@@ -1,7 +1,6 @@
 <?php
-namespace App\Repositories;
-
-use PDO;
+require __DIR__ . '/repository.php';
+require __DIR__ . '/../models/game.php';
 
 class GameRepository extends Repository {
 
@@ -9,7 +8,7 @@ class GameRepository extends Repository {
         $stmt = $this->connection->prepare("SELECT * FROM games");
         $stmt->execute();
 
-        $stmt->setFetchMode(PDO::FETCH_CLASS, 'App\\Models\\Game');
+        $stmt->setFetchMode(PDO::FETCH_CLASS, 'Game');
         $games = $stmt->fetchAll();
 
         return $games;

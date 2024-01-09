@@ -1,10 +1,7 @@
 <?php
-namespace App\Repositories;
 
-use PDO;
-
-class Repository
-{
+class Repository {
+    
     protected $connection;
 
     function __construct()
