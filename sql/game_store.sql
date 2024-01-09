@@ -27,7 +27,7 @@ SET time_zone = "+00:00";
 -- Table structure for table `games`
 --
 
-CREATE TABLE `games` (
+CREATE TABLE `game` (
   `id` int(11) NOT NULL,
   `title` varchar(255) NOT NULL,
   `description` text NOT NULL,
@@ -38,7 +38,7 @@ CREATE TABLE `games` (
 -- Dumping data for table `games`
 --
 
-INSERT INTO `games` (`id`, `title`, `description`, `price`) VALUES
+INSERT INTO `game` (`id`, `title`, `description`, `price`) VALUES
 (1, 'Fortnite', 'great game', 0),
 (2, 'God of War', 'Go on a adventure', 59.99);
 
@@ -49,7 +49,7 @@ INSERT INTO `games` (`id`, `title`, `description`, `price`) VALUES
 --
 -- Indexes for table `games`
 --
-ALTER TABLE `games`
+ALTER TABLE `game`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -59,7 +59,7 @@ ALTER TABLE `games`
 --
 -- AUTO_INCREMENT for table `games`
 --
-ALTER TABLE `games`
+ALTER TABLE `game`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 COMMIT;
 

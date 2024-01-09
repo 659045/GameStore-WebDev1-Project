@@ -25,6 +25,8 @@ include __DIR__ . '/../header.php';
     </tbody>    
 </table>
 
+<script src="/../../public/javascript/game.js"></script>
+
 <?php
 include __DIR__ . '/../footer.php';
 ?>

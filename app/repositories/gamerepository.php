@@ -5,6 +5,7 @@ require __DIR__ . '/../models/game.php';
 class GameRepository extends Repository {
 
     function getAll() {
+
         $stmt = $this->connection->prepare("SELECT * FROM games");
         $stmt->execute();
 
@@ -16,6 +17,7 @@ class GameRepository extends Repository {
 
 
     public function insert($game) {
+
         $stmt = $this->connection->prepare(
             "INSERT INTO games (title, description, price) VALUES (:title, :description, :price)"
         );
@@ -25,6 +27,7 @@ class GameRepository extends Repository {
             ':description' => $game->description, 
             ':price' => $game->price
         ]);
+        
         return $results;
     }
 }

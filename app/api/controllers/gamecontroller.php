@@ -1,18 +1,15 @@
 <?php
-require __DIR__ . '/../../services/gameservice.php';
+require __DIR__ . '/../../services/gameService.php';
 
-class GameController
-{
+class GameController {
 
     private $gameService;
 
-    function __construct()
-    {
+    function __construct() {
         $this->gameService = new GameService();
     }
 
-    public function index()
-    {
+    public function index() {
         if ($_SERVER["REQUEST_METHOD"] == "GET") {
             $games = $this->gameService->getAll();
             $json = json_encode($games);
@@ -25,6 +22,9 @@ class GameController
             $object = json_decode($json);
 
             $game = new Game();
+            $game->setTitle($object->title);
+            $game->setDescription($object->description);
+            $game->setPrice($object->price);
 
             $this->gameService->insert($game);
         }

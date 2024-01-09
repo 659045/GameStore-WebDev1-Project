@@ -2,7 +2,7 @@
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: *");
 
-require __DIR__ . '/../patternrouter.php';
+require __DIR__ . '/../patternRouter.php';
 
 $uri = trim($_SERVER['REQUEST_URI'], '/');
 
