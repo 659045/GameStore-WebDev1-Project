@@ -22,17 +22,5 @@ class GameController extends Controller {
 
     public function create() {
         require __DIR__ . '/../views/game/create.php';
-
-        if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            $json = file_get_contents('php://input');
-            $object = json_decode($json);
-
-            $game = new Game();
-            $game->setTitle($object->title);
-            $game->setDescription($object->description);
-            $game->setPrice($object->price);
-
-            $this->gameService->insert($game);
-        }
     }
 }
