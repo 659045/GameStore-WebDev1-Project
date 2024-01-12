@@ -4,6 +4,8 @@ require __DIR__ . '/controller.php';
 class HomeController extends Controller {
     
     public function index() {
+
+        
         $this->displayView($this);
     }
 

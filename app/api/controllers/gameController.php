@@ -31,6 +31,7 @@ class GameController {
                         $this->deleteGame(htmlspecialchars($_POST['id']));
                         break;
                 }
+                
                 return;
             }
 

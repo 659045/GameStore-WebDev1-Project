@@ -7,6 +7,7 @@ include __DIR__ . '/../header.php';
     <a href="/game/create" class="btn btn-primary">Create game</a>
     <div id="content-container">
         <table id="games-table" class="table">
+
             <thead>
                 <tr>
                     <th>Title</th>
@@ -61,7 +62,7 @@ include __DIR__ . '/../header.php';
                 //TODO change to localhost later
                 postForm('http://localhost:8888/api/game', data)
                 .then(() => {
-                    fetchData('http://localhost:8888/api/game');
+                   fetchData('http://localhost:8888/api/game')
                 })
                 .then((responseData) => {
                     refreshTable(responseData);
@@ -77,11 +78,11 @@ include __DIR__ . '/../header.php';
     }
 
     function refreshTable(data) {
-        $('#games-table').empty();
+        $('#games-table tr').remove();
 
         $.each(data, function (index, game) {
-        $('#games-table').append('<tr><td>' + game.title + '</td><td>' + game.description + '</td><td>' + game.price + '</td>');
-    });
+            $('#games-table').append('<tr><td>' + game.title + '</td><td>' + game.description + '</td><td>' + game.price + '</td>');
+        });
     }
 </script>
 

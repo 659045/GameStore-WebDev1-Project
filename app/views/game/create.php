@@ -25,9 +25,13 @@
 
         try {
             //TODO remember to change back to localhost
-            postForm('http://localhost:8888/api/game', data);
+            postForm('http://localhost:8888/api/game', data).then((response) => {
+                window.location.href =  "http://localhost:8888/game";
+            }).catch((error) => {
+                  //TODO insert unsuccessfull
+            }); 
         } catch(error) {
-            //TODO insert unsuccessfull
+            //TODO show error
             throw error
         }
     }
