@@ -11,36 +11,27 @@ class GameController {
 
     public function index() {
         try {
-            if ($_SERVER["REQUEST_METHOD"] == "GET") {
-                $games = $this->gameService->getAll();
-                $json = json_encode($games);
-                header("Content-type: application/json");
-                echo $json;
-                return;
+            switch ($_SERVER["REQUEST_METHOD"]) {
+                case 'GET':
+                    $games = $this->gameService->getAll();
+                    $json = json_encode($games);
+                    header("Content-type: application/json");
+                    echo $json;
+                    break;
+                case 'POST':
+                    $this->insertGame();
+                    break;
+                case 'PUT':
+                    $this->editGame();
+                    break;
+                case 'DELETE':
+                    $data = json_decode(file_get_contents('php://input'));
+                    $this->deleteGame(htmlspecialchars($data->id));
+                    break;
+                default:
+                    echo 'error controller';
+                    break;
             }
-    
-            if ($_SERVER["REQUEST_METHOD"] == "POST") {
-                switch ($_POST['post_type']) {
-                    case 'insert':
-                        $this->insertGame();
-                        break;
-                    case 'edit':
-                        $this->editGame();
-                        break;
-                    case 'delete':
-                        $this->deleteGame(htmlspecialchars($_POST['id']));
-                        break;
-                }
-                
-                return;
-            }
-
-            //TODO try request type delete
-            // if ($_SERVER["REQUEST_METHOD"] == "DELETE") {
-            //     $this->deleteGame(htmlspecialchars($_POST['id']));
-            //     return;
-            // }
-
         } catch(error) {
             echo 'error controller';
         }

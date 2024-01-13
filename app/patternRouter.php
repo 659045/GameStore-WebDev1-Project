@@ -1,4 +1,6 @@
 <?php
+require __DIR__ . '/controllers/errorController.php';
+
 class PatternRouter
 {
 
@@ -50,7 +52,8 @@ class PatternRouter
         if (file_exists($filename)) {
             require $filename;
         } else {
-            http_response_code(404);
+            $controllerObj = new ErrorController;
+            $controllerObj->{'index'}();
             die();
         }
         // dynamically call relevant controller method

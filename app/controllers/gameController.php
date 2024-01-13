@@ -1,8 +1,7 @@
 <?php
-require __DIR__ . '/controller.php';
 require __DIR__ . '/../services/gameService.php';
 
-class GameController extends Controller {
+class GameController {
 
     private $gameService;
 
@@ -15,12 +14,5 @@ class GameController extends Controller {
         $games = $this->gameService->getAll();
 
         require __DIR__ . '/../views/game/index.php';
-
-        //TODO fix displayView
-        // $this->displayView($games);
-    }
-
-    public function create() {
-        require __DIR__ . '/../views/game/create.php';
     }
 }

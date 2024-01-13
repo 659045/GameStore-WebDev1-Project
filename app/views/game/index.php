@@ -3,69 +3,87 @@ include __DIR__ . '/../header.php';
 ?>
 
 <body>
-    <h1>Manage games</h1>    
-    <a href="/game/create" class="btn btn-primary">Create game</a>
+    
+    
     <div id="content-container">
-        <table id="games-table" class="table">
+        <label id="error"></label>
+        <h1>Manage games</h1>    
+            <table>
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Description</th>
+                        <th>Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <form id="insertGameForm" method="POST">
+                            <td><input type="text" id="title" name="title" required></td>
+        
+                            <td><input type="text" id="description" name="description" required></td>
 
-            <thead>
-                <tr>
-                    <th>Title</th>
-                    <th>Description</th>
-                    <th>Price</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php
-                    foreach ($games as $game) {
-                        echo '<tr>';
-                        echo '<td>'.$game->title.'</td>';
-                        echo '<td>'.$game->description.'</td>';
-                        echo '<td>'.$game->price.'</td>';
-                        echo '<td><button id="btnEdit" value="'.$game->id.'">Edit</button></td>';
-                        echo '<td><button id="btnDelete" value="'.$game->id.'">Delete</button></td>';
-                        echo '</tr>';
-                    }
-                ?>
-            </tbody>    
+                            <td><input type="number" id="price" name="price" required></td>
+                
+                            <td><input type="submit" class="btn btn-primary" value="Add Game"></td>
+                        </form>
+                    </tr>
+                </tbody>
+            </table>
+        <table id="games-table" class="table">
+            
         </table>
     </div>
 </body>
 
 <script src="../javascript/general.js"></script>
 <script>
-    const gamesTable = document.getElementById('games-table');
-
-    function loadGamesTable() {
-
-    }
+    generateTable(<?php echo json_encode($games); ?>);
 
     document.addEventListener('DOMContentLoaded', function () {
-        const deleteButtons = document.querySelectorAll('#btnDelete'); 
-
-        deleteButtons.forEach(function (button) {
-            button.addEventListener('click', function () {
-                const gameId = button.value;
-                
-                deleteGame(gameId);
-            });
-        });
+        const form = document.querySelector('#insertGameForm');
+        form.addEventListener('submit', handleInsertGame);
     })
+
+    function handleInsertGame(event) {
+        event.preventDefault();
+        const data = new FormData(event.target);
+
+
+        console.log(data);
+        label = document.getElementById('error');
+
+        //TODO remember to change back to localhost
+        postForm('http://localhost:8888/api/game', data).then((response) => {
+            fetchData('/game').then((response) => {
+                generateTable(response);
+            }).catch((error) => {
+                label.innerHTML = 'Error fetching data';
+            });
+
+            label.innerHTML = 'Game added successfully';
+        }).catch((error) => {
+            console.error('Error:', error);
+            label.innerHTML = 'Error adding game';
+        }); 
+    }
+
 
     function deleteGame(id) {  
         if (confirm('are you sure you want to remove this game?')) {
-            const data = new FormData;
-            data.append('post_type', 'delete');
-            data.append('id', id);
+            const data = {
+                id: id
+            };
 
             try {
                 //TODO change to localhost later
-                postForm('http://localhost:8888/api/game', data)
+                deleteData('http://localhost:8888/api/game', data)
                 .then(() => {
-                   fetchData('http://localhost:8888/api/game')
-                })
-                .then((responseData) => {
-                    refreshTable(responseData);
+                    fetchData('/game')
+                    .then((responseData) => {
+                        console.log(responseData);
+                        generateTable(responseData);
+                    })
                 })
                 .catch((error) => {
                     console.error('Error:', error);
@@ -77,13 +95,105 @@ include __DIR__ . '/../header.php';
         }
     }
 
-    function refreshTable(data) {
-        $('#games-table tr').remove();
+    function generateTable(data) {
+        const gamesTable = document.getElementById('games-table');
+        gamesTable.innerHTML = '';
 
-        $.each(data, function (index, game) {
-            $('#games-table').append('<tr><td>' + game.title + '</td><td>' + game.description + '</td><td>' + game.price + '</td>');
-        });
+        generateTableHead(gamesTable);
+
+        generateTableBody(gamesTable, data);
+
+        document.getElementById('content-container').appendChild(gamesTable);
     }
+
+    function generateTableHead(table) {
+        const header = document.createElement('thead');
+        const titleHeader = document.createElement('th');
+        const descriptionHeader = document.createElement('th');
+        const priceHeader = document.createElement('th');
+
+        titleHeader.innerHTML = 'Title';
+        descriptionHeader.innerHTML = 'Description';
+        priceHeader.innerHTML = 'Price';
+
+        header.appendChild(titleHeader);
+        header.appendChild(descriptionHeader);
+        header.appendChild(priceHeader);
+
+        table.appendChild(header);
+    }
+
+    function generateTableBody(table, data) {
+        const body = document.createElement('tbody');
+
+        data.forEach(function (game) {
+            const row = document.createElement('tr');
+            const title = document.createElement('td');
+            const description = document.createElement('td');
+            const price = document.createElement('td');
+            const editButtonContainer = document.createElement('td');
+            const deleteButtonContainer = document.createElement('td');
+
+            title.innerHTML = game.title;
+            description.innerHTML = game.description;
+            price.innerHTML = game.price;
+
+            editButtonContainer.appendChild(generateEditButton(game));
+            deleteButtonContainer.appendChild(generateDeleteButton(game));
+
+            row.appendChild(title);
+            row.appendChild(description);
+            row.appendChild(price);
+            row.appendChild(editButtonContainer);
+            row.appendChild(deleteButtonContainer);
+
+            body.appendChild(row);
+        });
+
+        table.append(body);
+    }
+
+    function generateEditButton(data) {
+        const editButton = document.createElement('button');
+        editButton.innerHTML = 'Edit';
+        editButton.value = data.id;
+
+        editButton.addEventListener('click', function () {
+            const gameId = editButton.value;
+            //TODO maybe change later
+            window.location.href =  "http://localhost:8888/game/edit/" + gameId;
+        });
+
+        return editButton;
+    }
+
+    function generateDeleteButton(data) {
+        const deleteButton = document.createElement('button');
+        deleteButton.innerHTML = 'Delete';
+        deleteButton.value = data.id;
+
+        deleteButton.addEventListener('click', function () {
+            const gameId = deleteButton.value;
+            
+            deleteGame(gameId);
+        });
+
+        return deleteButton;
+    }
+
+    //TODO flickers on the second time
+    function fadeOut(element) {
+        var op = 3;
+        var timer = setInterval(function () {
+            if (op <= 0){
+                clearInterval(timer);
+                element.style.display = 'hidden';
+            }
+            element.style.opacity = op;
+            element.style.filter = 'alpha(opacity=' + op * 100 + ")";
+            op -= op * 0.1;
+        }, 50);
+    }   
 </script>
 
 <?php

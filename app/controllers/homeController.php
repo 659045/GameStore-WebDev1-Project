@@ -1,15 +1,8 @@
 <?php
-require __DIR__ . '/controller.php';
 
-class HomeController extends Controller {
+class HomeController {
     
     public function index() {
-
-        
-        $this->displayView($this);
-    }
-
-    public function about() {
-        $this->displayView($this);
+        require __DIR__ . '/../views/home/index.php';
     }
 }

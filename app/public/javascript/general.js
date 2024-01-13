@@ -6,11 +6,6 @@ async function postForm(url = '', form) {
   try {
     const response = await fetch(url, {
       method: 'POST',
-      mode: 'cors',
-      cache: 'no-cache',
-      credentials: 'same-origin',
-      redirect: 'follow',
-      referrerPolicy: 'no-referrer',
       body: form,
     });
 
@@ -24,14 +19,9 @@ async function postData(url = '', data = {}) {
   try {
     const response = await fetch(url, {
       method: 'POST',
-      mode: 'cors',
-      cache: 'no-cache',
-      credentials: 'same-origin',
       headers: {
         'Content-Type': 'application/json',
       },
-      redirect: 'follow',
-      referrerPolicy: 'no-referrer',
       body: JSON.stringify(data),
     });
 
@@ -45,14 +35,9 @@ async function deleteData(url = '', data = {}) {
   try {
     const response = await fetch(url, {
       method: 'DELETE',
-      mode: 'cors',
-      cache: 'no-cache',
-      credentials: 'same-origin',
       headers: {
         'Content-Type': 'application/json',
       },
-      redirect: 'follow',
-      referrerPolicy: 'no-referrer',
       body: JSON.stringify(data),
     });
 
@@ -64,7 +49,8 @@ async function deleteData(url = '', data = {}) {
 
 async function fetchData(path = '') {
   try {
-    const response = await fetch('http://localhost/api' + path);
+    //TODO change back to localhost
+    const response = await fetch('http://localhost:8888/api' + path);
     return await response.json();
   } catch(error) {
     throw error
