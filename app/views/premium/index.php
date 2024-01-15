@@ -1,8 +1,9 @@
-<?
+<?php
 include __DIR__ . '/../header.php';
 ?>
 
-<h1>About page!</h1>;
+<h1>Upgrade to premium</h1>
 
-<?
+<?php
 include __DIR__ . '/../footer.php';
+?>

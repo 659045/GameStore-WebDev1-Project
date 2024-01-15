@@ -29,13 +29,30 @@ class GameRepository extends Repository {
 
     public function insert($game) {
         $stmt = $this->connection->prepare(
-            "INSERT INTO game (title, description, price) VALUES (:title, :description, :price)"
+            "INSERT INTO game (title, description, price, image) VALUES (:title, :description, :price, :image)"
         );
         
         $results = $stmt->execute([
             ':title' => $game->title, 
             ':description' => $game->description, 
-            ':price' => $game->price
+            ':price' => $game->price,
+            ':image' => $game->image
+        ]);
+        
+        return $results;
+    }
+
+    public function edit($game) {
+        $stmt = $this->connection->prepare(
+            "UPDATE game SET title = :title, description = :description, price = :price, image = :image WHERE id = :id"
+        );
+        
+        $results = $stmt->execute([
+            ':title' => $game->title, 
+            ':description' => $game->description,   
+            ':price' => $game->price,
+            ':image' => $game->image,
+            ':id' => $game->id
         ]);
         
         return $results;

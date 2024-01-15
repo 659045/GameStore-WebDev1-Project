@@ -21,6 +21,10 @@ class GameService {
         return $this->gameRepository->insert($game);
     }
 
+    public function edit($game) {
+        return $this->gameRepository->edit($game);
+    }
+
     public function delete($id) {
         return $this->gameRepository->delete($id);
     }

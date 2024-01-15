@@ -6,7 +6,6 @@ class GameController {
     private $gameService;
 
     function __construct() {
-
         $this->gameService = new GameService;
     }
 
@@ -14,5 +13,14 @@ class GameController {
         $games = $this->gameService->getAll();
 
         require __DIR__ . '/../views/game/index.php';
+    }
+
+    public function edit() {
+        if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+            $id = htmlspecialchars($_GET['id']);
+            $game = $this->gameService->getGameById($id);
+        }
+
+        require_once __DIR__ . '/../views/game/edit.php';
     }
 }

@@ -15,6 +15,19 @@ async function postForm(url = '', form) {
   }
 }
 
+async function putForm(url = '', form) {
+  try {
+    const response = await fetch(url, {
+      method: 'PUT',
+      body: form,
+    });
+
+    console.log('putForm Response', response);
+  } catch(error) {
+    throw error;
+  }
+}
+
 async function postData(url = '', data = {}) {
   try {
     const response = await fetch(url, {
@@ -26,6 +39,22 @@ async function postData(url = '', data = {}) {
     });
 
     console.log('postData Response', response);
+  } catch(error) {
+    throw error;
+  }
+}
+
+async function putData(url = '', data = {}) {
+  try {
+    const response = await fetch(url, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    });
+
+    console.log('putData Response', response);
   } catch(error) {
     throw error;
   }

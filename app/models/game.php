@@ -5,6 +5,7 @@ class Game implements JsonSerializable {
     public string $title;
     public string $description;
     public float $price;
+    public string $image;
 
     public function getId(): int {
         return $this->id;
@@ -38,12 +39,21 @@ class Game implements JsonSerializable {
         $this->price = $price;
     }
 
+    public function getImage(): string {
+        return $this->image;
+    }
+
+    public function setImage(string $image): void {
+        $this->image = $image;
+    }
+
     public function jsonSerialize(): mixed {
         return [
             'id' => $this->id,
             'title' => $this->title,
             'description' => $this->description,
             'price' => $this->price,
+            'image' => $this->image
         ];
     }
 }
