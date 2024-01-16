@@ -1,11 +1,12 @@
 <?php
 
 class Game implements JsonSerializable {
-    public int $id;
-    public string $title;
-    public string $description;
-    public float $price;
-    public string $image;
+
+    private int $id;
+    private string $title;
+    private string $description;
+    private float $price;
+    private string $image;
 
     public function getId(): int {
         return $this->id;

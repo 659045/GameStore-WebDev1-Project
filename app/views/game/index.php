@@ -4,12 +4,10 @@ include __DIR__ . '/../header.php';
 
 <head>  
     <title>Game Management</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 
 <body>
     <div id="content-container">
-        <label id="error"></label>
         <h1>Manage games</h1>    
         <table class="my-3">
             <thead>
@@ -23,19 +21,20 @@ include __DIR__ . '/../header.php';
             <tbody>
                 <tr>
                     <form id="insertGameForm" method="POST">
-                        <td><input type="text" id="title" name="title" required></td>
+                        <td><input type="text" id="titleInput" name="title" required></td>
     
-                        <td><input type="text" id="description" name="description" required></td>
+                        <td><input type="text" id="descriptionInput" name="description" required></td>
 
-                        <td><input type="float" id="price" name="price" required></td>
+                        <td><input type="float" id="priceInput" name="price" required></td>
 
-                        <td><input type="file" id="image" name="image" accept="image/*"></td>
+                        <td><input type="file" id="imageInput" name="image" accept="image/*"></td>
 
                         <td><input type="submit" class="btn btn-primary ml-3" value="Add Game"></td>
                     </form>
                 </tr>
             </tbody>
         </table>
+        <label id="error"></label>
         <table id="games-table" class="table my-5"></table>
     </div>
 </body>
@@ -68,6 +67,15 @@ include __DIR__ . '/../header.php';
                 label.innerHTML = 'Error fetching data';
             });
 
+            const titleInput = document.getElementById('titleInput');
+            const descriptionInput = document.getElementById('descriptionInput');
+            const priceInput = document.getElementById('priceInput');
+            const imageInput = document.getElementById('imageInput');
+
+            titleInput.value = '';
+            descriptionInput.value = '';
+            priceInput.value = '';
+            imageInput.value = '';
             label.innerHTML = 'Game added successfully';
         }).catch((error) => {
             console.error('Error:', error);

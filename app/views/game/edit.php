@@ -2,16 +2,20 @@
 include __DIR__ . '/../header.php';
 ?>
 
+<head>
+    <title>Edit Game</title>
+</head>
+
 <div>
     <form method="PUT">
         <label for="title">Title:</label><br>
-        <input type="text" id="title" name="title" value="<? echo $game->title ?>" required><br>
+        <input type="text" id="titleInput" name="title" value="<? echo $game->title ?>" required><br>
         <label for="description">Description:</label><br>
-        <input type="text" id="description" name="description" value="<? echo $game->description ?>" required><br>
+        <input type="text" id="descriptionInput" name="description" value="<? echo $game->description ?>" required><br>
         <label for="price">Price:</label><br>
-        <input type="float" id="price" name="price" value="<? echo $game->price ?>" required><br>
+        <input type="float" id="priceInput" name="price" value="<? echo $game->price ?>" required><br>
         <label for="image">Image:</label><br>
-        <input type="file" id="image" name="image" accept="image/*"><br><br>
+        <input type="file" id="imageInput" name="image" accept="image/*"><br><br>
         <input type="submit" class="btn btn-primary" value="Edit">
     </form>
     <label id="error"></label>

@@ -3,27 +3,7 @@ include __DIR__ . '/../header.php';
 ?>
 
 <head>
-  <link
-    rel="stylesheet"
-    href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-  />
-
-  <style>
-    .bd-placeholder-img {
-      font-size: 1.125rem;
-      text-anchor: middle;
-      -webkit-user-select: none;
-      -moz-user-select: none;
-      -ms-user-select: none;
-      user-select: none;
-    }
-
-    @media (min-width: 768px) {
-      .bd-placeholder-img-lg {
-        font-size: 3.5rem;
-      }
-    }
-  </style>
+  <title>Home</title>
 </head>
 
 <div>
@@ -33,11 +13,13 @@ include __DIR__ . '/../header.php';
   <?php foreach ($games as $game) { ?>
     <div class="col-lg-3 col-md-6 col-sm-12">
       <div class="card mb-5 itemCard">
-        <div class="card-body">
+        <div class="card-body d-flex flex-column">
+          <button id="btnWishlist" value="<? echo $game->id ?>" class="btn btn-primary w-25 ml-auto wishlist-button mb-3"><i id="heartIcon<? echo $game->id ?>" class="fa fa-heart"></i></button>
+          <img src="/img/<? echo $game->image ?>"/>
           <p><? echo $game->title ?></p>
           <p><? echo $game->description ?></p>
           <p><? echo $game->price ?></p>
-          <img src="../public/img/<? echo $game->image ?>" alt="<? echo $game->image ?>"/>
+          <button class="btn btn-primary w-50 ml-auto">Add to cart</button>
         </div>
       </div>
     </div>
@@ -48,8 +30,33 @@ include __DIR__ . '/../header.php';
 include __DIR__ . '/../footer.php'; 
 ?>
 
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var wishlistButtons = document.querySelectorAll('.wishlist-button');
+
+    wishlistButtons.forEach(function (button) {
+      button.addEventListener("click", function () {
+        var iconId = button.value
+        var heartIcon = document.getElementById('heartIcon' + iconId);
+
+        if (heartIcon.classList.contains('fa-heart')) {
+          heartIcon.classList.remove('fa-heart');
+          heartIcon.classList.add('fa-heart-o');
+
+          //TODO add to wishlist
+        } else {
+          heartIcon.classList.remove('fa-heart-o');
+          heartIcon.classList.add('fa-heart');
+
+          //TODO remove from wishlist
+        }
+      });
+    });
+  });
+</script>
+
 <style>
-  img {
+  .front-image {
     height: 50%;
     width: 100%;
     display: block;
