@@ -14,7 +14,11 @@ include __DIR__ . '/../header.php';
     <div class="col-lg-3 col-md-6 col-sm-12">
       <div class="card mb-5 itemCard">
         <div class="card-body d-flex flex-column">
-          <button id="btnWishlist" value="<? echo $game->getId() ?>" class="btn btn-primary w-25 ml-auto wishlist-button mb-3"><i id="heartIcon<? echo $game->getId() ?>" class="fa fa-heart"></i></button>
+          <?
+            if (isset($_SESSION['role']) && ($_SESSION['role'] === 'premium' || $_SESSION['role'] === 'admin')) {
+              echo '<button id="btnWishlist" value="<? echo $game->getId() ?>" class="btn btn-primary w-25 ml-auto wishlist-button mb-3"><i id="heartIcon<? echo $game->getId() ?>" class="fa fa-heart"></i></button>';
+            }
+          ?>
           <img src="/img/<? echo $game->getImage() ?>"/>
           <p><? echo $game->getTitle() ?></p>
           <p><? echo $game->getDescription() ?></p>

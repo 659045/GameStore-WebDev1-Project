@@ -18,18 +18,32 @@
       <header class="d-flex justify-content-center py-3">
         <ul class="nav nav-pills">
           <li class="nav-item"><a href="/" class="nav-link">Home</a></li>
-          <li class="nav-item ml-auto"><a href="/game" class="nav-link">Manage games</a></li>
+          <?
+            if (isset($_SESSION['username']) && $_SESSION['role'] == 'admin') {
+              echo '<li class="nav-item ml-auto"><a href="/game" class="nav-link">Manage games</a></li>';
+            } 
+          ?>
           <li class="nav-item"><a href="/cart" class="nav-link">Shopping Cart</a></li>
-          <li class="nav-item"><a href="/wishlist" class="nav-link">Wish List</a></li>
-          <li class="nav-item"><a href="/premium" class="nav-link">Upgrade to Premium</a></li>
-          <?php
+          <? 
+            if (isset($_SESSION['username']) && ($_SESSION['role'] == 'premium')) {
+              echo '<li class="nav-item"><a href="/wishlist" class="nav-link">Wish List</a></li>';
+            }
+          ?>
+          <?
+            if (isset($_SESSION['username']) && ($_SESSION['role'] == 'normal')) {
+              echo '<li class="nav-item"><a href="/premium" class="nav-link">Upgrade to Premium</a></li>';
+            }
+          ?>
+          <?
             if (isset($_SESSION['username'])) {
                 echo '<li class="nav-item"><a href="/logout" class="nav-link">Logout</a></li>';
+                echo "<li class='nav-item'><a href='/user' class='userAccountLink'><button class='btn btn-primary mt-0' style='width: 100%;'><i class='fa fa-user userIcon mr-2'></i>{$_SESSION['username']}</a></button></li>";
             } else {
                 echo '<li class="nav-item"><a href="/login" class="nav-link">Login</a></li>';
                 echo '<li class="nav-item"><a href="/signup"><button class="btn btn-primary mt-0" style="width: 100%"><i class="fa fa-user userIcon mr-2"></i>Sign Up</button></a></li>';
             }
           ?>
+          
         </ul>
       </header>
 
@@ -54,4 +68,7 @@
     background-color: lightgray;
   }
 
+  .userAccountLink {
+    color: white;
+  }
 </style>

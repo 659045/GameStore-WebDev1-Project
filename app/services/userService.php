@@ -7,6 +7,11 @@ class UserService {
         return $repository->getAll();
     }
 
+    public function getByUsername($username) {
+        $repository = new UserRepository();
+        return $repository->getByUsername($username);
+    }
+
     public function insert($user) {
         $repository = new UserRepository();
         return $repository->insert($user);

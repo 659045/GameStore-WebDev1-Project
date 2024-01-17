@@ -18,16 +18,17 @@ class UserRepository extends Repository {
         }
     }
 
-    public function getUserByEmail($email) {
+    public function getByUsername($username) {
         try {
-            $stmt = $this->connection->prepare("SELECT * FROM user WHERE :email = ?");
-            $stmt->execute(array(':email' => htmlspecialchars($email)));
+            $stmt = $this->connection->prepare("SELECT * FROM user WHERE username = :username");
+            $stmt->execute(array(':username' => htmlspecialchars($username)));
+    
             $stmt->setFetchMode(PDO::FETCH_CLASS, 'User');
             $user = $stmt->fetch();
-
+    
             return $user;
         } catch (PDOException $e) {
-            echo $e;
+            echo $e;	
         }
     }
 
@@ -38,10 +39,10 @@ class UserRepository extends Repository {
             );
             
             $results = $stmt->execute([
-                ':email' => $user->email, 
-                ':username' => $user->username, 
-                ':password' => $user->password,
-                ':role' => $user->role
+                ':email' => $user->getEmail(), 
+                ':username' => $user->getUsername(), 
+                ':password' => $user->getPassword(),
+                ':role' => $user->getRole()
             ]);
             
             return $results;
@@ -51,7 +52,23 @@ class UserRepository extends Repository {
     }
 
     public function edit($user) {
-
+        try {
+            $stmt = $this->connection->prepare(
+                "UPDATE user SET email = :email, username = :username, password = :password, role = :role WHERE id = :id"
+            );
+            
+            $results = $stmt->execute([
+                ':email' => $user->getEmail(), 
+                ':username' => $user->getUsername(), 
+                ':password' => $user->getPassword(),
+                ':role' => $user->getRole(),
+                ':id' => $user->getId()
+            ]);
+            
+            return $results;
+        } catch (PDOException $e) {
+            echo $e;
+        }
     }
 
     public function delete($id) {
