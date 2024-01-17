@@ -9,11 +9,11 @@ include __DIR__ . '/../header.php';
 <div>
     <form method="PUT">
         <label for="title">Title:</label><br>
-        <input type="text" id="titleInput" name="title" value="<? echo $game->title ?>" required><br>
+        <input type="text" id="titleInput" name="title" value="<? echo $game->getTitle() ?>" required><br>
         <label for="description">Description:</label><br>
-        <input type="text" id="descriptionInput" name="description" value="<? echo $game->description ?>" required><br>
+        <input type="text" id="descriptionInput" name="description" value="<? echo $game->getDescription() ?>" required><br>
         <label for="price">Price:</label><br>
-        <input type="float" id="priceInput" name="price" value="<? echo $game->price ?>" required><br>
+        <input type="float" id="priceInput" name="price" value="<? echo $game->getPrice() ?>" required><br>
         <label for="image">Image:</label><br>
         <input type="file" id="imageInput" name="image" accept="image/*"><br><br>
         <input type="submit" class="btn btn-primary" value="Edit">
@@ -31,11 +31,11 @@ include __DIR__ . '/../header.php';
         const label = document.getElementById('error');
 
         const data = {
-            id: <? echo $game->id ?>,
-            title: document.getElementById('title').value,
-            description: document.getElementById('description').value,
-            price: document.getElementById('price').value,
-            image: document.getElementById('image').value
+            id: <? echo $game->getId() ?>,
+            title: document.getElementById('titleInput').value,
+            description: document.getElementById('descriptionInput').value,
+            price: document.getElementById('priceInput').value,
+            image: document.getElementById('imageInput').value
         }
         
         //TODO remember to change back to localhost

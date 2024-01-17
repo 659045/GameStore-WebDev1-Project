@@ -14,11 +14,11 @@ include __DIR__ . '/../header.php';
     <div class="col-lg-3 col-md-6 col-sm-12">
       <div class="card mb-5 itemCard">
         <div class="card-body d-flex flex-column">
-          <button id="btnWishlist" value="<? echo $game->id ?>" class="btn btn-primary w-25 ml-auto wishlist-button mb-3"><i id="heartIcon<? echo $game->id ?>" class="fa fa-heart"></i></button>
-          <img src="/img/<? echo $game->image ?>"/>
-          <p><? echo $game->title ?></p>
-          <p><? echo $game->description ?></p>
-          <p><? echo $game->price ?></p>
+          <button id="btnWishlist" value="<? echo $game->getId() ?>" class="btn btn-primary w-25 ml-auto wishlist-button mb-3"><i id="heartIcon<? echo $game->getId() ?>" class="fa fa-heart"></i></button>
+          <img src="/img/<? echo $game->getImage() ?>"/>
+          <p><? echo $game->getTitle() ?></p>
+          <p><? echo $game->getDescription() ?></p>
+          <p><? echo $game->getPrice() ?></p>
           <button class="btn btn-primary w-50 ml-auto">Add to cart</button>
         </div>
       </div>

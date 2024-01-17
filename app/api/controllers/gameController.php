@@ -14,9 +14,8 @@ class GameController {
             switch ($_SERVER["REQUEST_METHOD"]) {
                 case 'GET':
                     $games = $this->gameService->getAll();
-                    $json = json_encode($games);
                     header("Content-type: application/json");
-                    echo $json;
+                    echo json_encode($games);
                     break;
                 case 'POST':
                     $this->insertGame();
@@ -33,7 +32,7 @@ class GameController {
                     echo 'Error controller';
                     break;
             }
-        } catch(error) {
+        } catch(Exception $e) {
             http_response_code(500);
             echo "Error invalid data received";
         }

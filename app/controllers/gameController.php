@@ -1,5 +1,5 @@
 <?php
-require __DIR__ . '/../services/gameService.php';
+require_once __DIR__ . '/../services/gameService.php';
 
 class GameController {
 
@@ -12,7 +12,7 @@ class GameController {
     public function index() {
         $games = $this->gameService->getAll();
 
-        require __DIR__ . '/../views/game/index.php';
+        require_once __DIR__ . '/../views/game/index.php';
     }
 
     public function edit() {

@@ -3,6 +3,7 @@ header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: *");
 
 require __DIR__ . '/../patternRouter.php';
+session_start();
 
 $uri = trim($_SERVER['REQUEST_URI'], '/');
 

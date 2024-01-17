@@ -1,5 +1,5 @@
 <?php
-require __DIR__ . '/../repositories/wishListRepository.php';
+require_once __DIR__ . '/../repositories/wishListRepository.php';
 
 class WishListService {
     public function getAll() {

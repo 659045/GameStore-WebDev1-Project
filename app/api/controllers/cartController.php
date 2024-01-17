@@ -10,20 +10,39 @@ class CartController {
     }
 
     public function index() {
-        if ($_SERVER["REQUEST_METHOD"] == "GET") {
-            $carts = $this->cartService->getAll();
-            $json = json_encode($carts);
-            header("Content-type: application/json");
-            echo $json;
+        try {
+            switch ($_SERVER['REQUEST_METHOD']) {
+                case 'GET':
+                    $cart = array();
+
+                    if (isset($_SESSION["cart"])) {
+                        $cart = $_SESSION["cart"];
+                    }
+
+                    header("Content-type: application/json");
+                    echo json_encode($cart);
+                    break;
+                case 'POST':
+                    $this->insert();
+                    break;
+                case 'DELETE':
+                    $data = json_decode(file_get_contents('php://input'));
+                    $this->delete(htmlspecialchars($data->id));
+                    break;
+                default:
+                    break;
+            }  
+        } catch (Exception $e) {
+            echo $e->getMessage();
         }
+    }
 
-        if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            $json = file_get_contents('php://input');
-            $object = json_decode($json);
+    public function insert() {
+        $id = htmlspecialchars($_POST['id']);
+        $this->cartService->insert($id);
+    }
 
-            $cart = new Cart();
-
-            $this->cartService->insert($cart);
-        }
+    public function delete($id) {
+        $this->cartService->delete($id);
     }
 }

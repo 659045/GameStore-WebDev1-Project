@@ -6,15 +6,14 @@ include __DIR__ . '/../header.php';
     <title>Login</title>
 </head>
 
-<form>
+<form method="POST">
   <div class="form-group d-flex flex-column">
-    <label for="email">Email address</label>
-    <input type="email" class="form-control" id="emailInput" placeholder="Enter email">
+    <label for="username">Username</label>
+    <input type="text" class="form-control" id="usernameInput" name="username" placeholder="Username" required>
     <label for="password">Password</label>
-    <input type="password" class="form-control" id="passwordInput" placeholder="Password">
+    <input type="password" class="form-control" id="passwordInput" name="password" placeholder="Password" required>
     <a href="/signup" class="mx-auto"><small>Don't have a account?</small></a>
-    <button type="submit" class="btn btn-primary mt-3 mx-auto">Login</button>
-
+    <button id="btnLogin" type="submit" class="btn btn-primary mt-3 mx-auto">Login</button>
     <label id="error"></label>
   </div>
 </form>

@@ -1,5 +1,5 @@
 <?php
-require __DIR__ . '/../repositories/gameRepository.php';
+require_once __DIR__ . '/../repositories/gameRepository.php';
 
 class GameService {
 

@@ -1,7 +1,7 @@
 <?php
 
 class PurchaseHistory implements JsonSerializable {
-    public function jsonSerialize() {
+    public function jsonSerialize(): mixed {
         
     }
 }

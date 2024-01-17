@@ -48,7 +48,7 @@ class User implements JsonSerializable {
         $this->role = $role;
     }
 
-    public function jsonSerialize() {
+    public function jsonSerialize(): mixed {
         return [
             'id' => $this->id,
             'email' => $this->email,

@@ -1,5 +1,5 @@
 <?php
-require __DIR__ . '/../repositories/purchaseHistoryRepository.php';
+require_once __DIR__ . '/../repositories/purchaseHistoryRepository.php';
 
 class PurchaseHistoryService {
     public function getAll() {

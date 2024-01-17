@@ -3,7 +3,7 @@
 class SignUpController {
 
     function __construct() {
-
+        
     }
 
     public function index() {

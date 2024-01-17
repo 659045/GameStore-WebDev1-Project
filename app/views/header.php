@@ -22,11 +22,16 @@
           <li class="nav-item"><a href="/cart" class="nav-link">Shopping Cart</a></li>
           <li class="nav-item"><a href="/wishlist" class="nav-link">Wish List</a></li>
           <li class="nav-item"><a href="/premium" class="nav-link">Upgrade to Premium</a></li>
-          <li class="nav-item"><a href="/login" class="nav-link">Login</a></li>
+          <?php
+            if (isset($_SESSION['username'])) {
+                echo '<li class="nav-item"><a href="/logout" class="nav-link">Logout</a></li>';
+            } else {
+                echo '<li class="nav-item"><a href="/login" class="nav-link">Login</a></li>';
+                echo '<li class="nav-item"><a href="/signup"><button class="btn btn-primary mt-0" style="width: 100%"><i class="fa fa-user userIcon mr-2"></i>Sign Up</button></a></li>';
+            }
+          ?>
         </ul>
-        <button href="/signup" class="btn btn-primary" style="width: 10%"><i class="fa fa-user userIcon mr-2"></i>Sign Up</button>
       </header>
-
 
 <style>
   .nav-item {

@@ -1,30 +1,36 @@
 <?php
-require __DIR__ . '/repository.php';
-require __DIR__ . '/../models/wishList.php';
+require_once __DIR__ . '/repository.php';
+require_once __DIR__ . '/../models/wishList.php';
 
 class WishListRepository extends Repository {
 
     function getAll() {
-
-        $stmt = $this->connection->prepare("SELECT * FROM wish_list");
-        $stmt->execute();
-
-        $stmt->setFetchMode(PDO::FETCH_CLASS, 'WishList');
-        $wishLists = $stmt->fetchAll();
-
-        return $wishLists;
+        try {
+            $stmt = $this->connection->prepare("SELECT * FROM wish_list");
+            $stmt->execute();
+    
+            $stmt->setFetchMode(PDO::FETCH_CLASS, 'WishList');
+            $wishLists = $stmt->fetchAll();
+    
+            return $wishLists;
+        } catch (PDOException $e) {
+            echo $e;
+        }
     }
 
     public function insert($wishList) {
-
-        $stmt = $this->connection->prepare(
-            "INSERT INTO cart () VALUES ()"
-        );
-        
-        $results = $stmt->execute([
+        try {
+            $stmt = $this->connection->prepare(
+                "INSERT INTO wishlist () VALUES ()"
+            );
             
-        ]);
-        
-        return $results;
+            $results = $stmt->execute([
+                
+            ]);
+            
+            return $results;
+        } catch (PDOException $e) {
+            echo $e;
+        }
     }
 }
