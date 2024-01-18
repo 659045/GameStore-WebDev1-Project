@@ -4,11 +4,9 @@ require_once __DIR__ . '/../services/gameService.php';
 
 class CartController {
 
-    private $cartService;
     private $gameService;
 
     function __construct() {
-        $this->cartService = new CartService();
         $this->gameService = new GameService();
     }
 
@@ -24,6 +22,6 @@ class CartController {
             $game = $this->gameService->getGameById($value);
             $total += ($game->getPrice());
         }
-        require __DIR__ . '/../views/cart/index.php';
+        require_once __DIR__ . '/../views/cart/index.php';
     }
 }

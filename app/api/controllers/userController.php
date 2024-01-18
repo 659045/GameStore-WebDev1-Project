@@ -13,17 +13,18 @@ class UserController {
         try {
             switch ($_SERVER["REQUEST_METHOD"]) {
                 case "GET":
+                    header("Content-type: application/json");
                     if (isset($_GET['username'])) {
-                        $user = $this->userService->getByUsername(htmlspecialchars($_GET['username']));
-                        header("Content-type: application/json");
+                        $user = $this->userService->getUserByUsername(htmlspecialchars($_GET['username']));
                         echo json_encode($user);
-                        break;
+                    } elseif (isset($_GET['email'])) {
+                        $user = $this->userService->getUserByEmail(htmlspecialchars($_GET['email']));
+                        echo json_encode($user);
                     } else {
                         $users = $this->userService->getAll();
-                        header("Content-type: application/json");
                         echo json_encode($users);
-                        break;
                     }
+                    break;
                 case "POST":
                     $this->insertUser();
                     break;

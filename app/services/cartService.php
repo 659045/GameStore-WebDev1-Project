@@ -29,7 +29,7 @@ class CartService {
         $cart = array();
 
         if(isset($_SESSION["cart"])) {
-            $cart=$_SESSION["cart"];
+            $cart = $_SESSION["cart"];
         }
 
         if(in_array($id, array_keys($cart))) {

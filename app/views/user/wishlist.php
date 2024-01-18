@@ -3,11 +3,10 @@ include __DIR__ . '/../header.php';
 ?>
 
 <head>
-    <title>Shopping Cart</title>
+    <title>Wish List</title>
 </head>
 
-<h1>Shopping Cart</h1>
-
+<h1>Wish List</h1>
 
 <?php
 include __DIR__ . '/../footer.php';

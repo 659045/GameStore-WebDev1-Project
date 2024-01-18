@@ -25,7 +25,7 @@ include __DIR__ . '/../header.php';
     
                         <td><input type="text" id="descriptionInput" name="description" required></td>
 
-                        <td><input type="float" id="priceInput" name="price" required></td>
+                        <td><input type="float" pattern="[0-9]+(\.[0-9]+)?" id="priceInput" name="price" required></td>
 
                         <td><input type="file" id="imageInput" name="image" accept="image/*"></td>
 
@@ -54,33 +54,42 @@ include __DIR__ . '/../header.php';
     function handleInsertGame(event) {
         event.preventDefault();
         const data = new FormData(event.target);
-
+        
+        console.log(data);
         insertGame(data);
     }
 
     function insertGame(data) {
         //TODO remember to change back to localhost
-        postForm('http://localhost:8888/api/game', data).then((response) => {
-            fetchData('/game').then((response) => {
-                generateTable(response);
-            }).catch(() => {
-                label.innerHTML = 'Error fetching data';
-            });
+        fetchData('/game?title=' + data.get('title')).then((game) => {
+            if (game) {
+                label.innerHTML = 'Game already exists';
+            } else {
+                postForm('http://localhost:8888/api/game', data).then((response) => {
+                    fetchData('/game').then((response) => {
+                        generateTable(response);
+                    }).catch(() => {
+                        label.innerHTML = 'Error fetching data';
+                    });
 
-            const titleInput = document.getElementById('titleInput');
-            const descriptionInput = document.getElementById('descriptionInput');
-            const priceInput = document.getElementById('priceInput');
-            const imageInput = document.getElementById('imageInput');
+                    const titleInput = document.getElementById('titleInput');
+                    const descriptionInput = document.getElementById('descriptionInput');
+                    const priceInput = document.getElementById('priceInput');
+                    const imageInput = document.getElementById('imageInput');
 
-            titleInput.value = '';
-            descriptionInput.value = '';
-            priceInput.value = '';
-            imageInput.value = '';
-            label.innerHTML = 'Game added successfully';
+                    titleInput.value = '';
+                    descriptionInput.value = '';
+                    priceInput.value = '';
+                    imageInput.value = '';
+                    label.innerHTML = 'Game added successfully';
+                }).catch((error) => {
+                    console.error('Error:', error);
+                    label.innerHTML = 'Error adding game';
+                }); 
+            }
         }).catch((error) => {
-            console.error('Error:', error);
-            label.innerHTML = 'Error adding game';
-        }); 
+            console.log(error);
+        });
     }
 
     function deleteGame(id) {  

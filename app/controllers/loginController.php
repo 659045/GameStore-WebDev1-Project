@@ -24,7 +24,7 @@ class LoginController {
                 if ($this->loginService->login($username, $password)) {
                     $_SESSION["username"] = $username;
 
-                    $user = $this->userService->getByUsername($username);
+                    $user = $this->userService->getUserByUsername($username);
 
                     switch ($user->getRole()) {
                         case 'admin':

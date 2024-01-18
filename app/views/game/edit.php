@@ -7,15 +7,16 @@ include __DIR__ . '/../header.php';
 </head>
 
 <div>
-    <form method="PUT">
+    <form method="POST">
+        <input type="number" id="idField" name="id" value="<?php echo $game->getId(); ?>" hidden required><br>
         <label for="title">Title:</label><br>
-        <input type="text" id="titleInput" name="title" value="<? echo $game->getTitle() ?>" required><br>
+        <input type="text" id="titleInput" name="title" value="<?php echo $game->getTitle(); ?>" required><br>
         <label for="description">Description:</label><br>
-        <input type="text" id="descriptionInput" name="description" value="<? echo $game->getDescription() ?>" required><br>
+        <input type="text" id="descriptionInput" name="description" value="<?php echo $game->getDescription(); ?>" required><br>
         <label for="price">Price:</label><br>
-        <input type="float" id="priceInput" name="price" value="<? echo $game->getPrice() ?>" required><br>
+        <input type="float" pattern="[0-9]+(\.[0-9]+)?" id="priceInput" name="price" value="<?php echo $game->getPrice(); ?>" required><br>
         <label for="image">Image:</label><br>
-        <input type="file" id="imageInput" name="image" accept="image/*"><br><br>
+        <input type="file" id="imageInput" name="image" accept="image/*" value="<?php echo $game->getPrice(); ?>" required><br><br>
         <input type="submit" class="btn btn-primary" value="Edit">
     </form>
     <label id="error"></label>
@@ -30,17 +31,11 @@ include __DIR__ . '/../header.php';
         event.preventDefault();
         const label = document.getElementById('error');
 
-        const data = {
-            id: <? echo $game->getId() ?>,
-            title: document.getElementById('titleInput').value,
-            description: document.getElementById('descriptionInput').value,
-            price: document.getElementById('priceInput').value,
-            image: document.getElementById('imageInput').value
-        }
+        const data = new FormData(event.target);
         
         //TODO remember to change back to localhost
-        putData('http://localhost:8888/api/game', data).then((response) => {
-            window.location.href = "http://localhost:8888/game";
+        postForm('http://localhost:8888/api/game', data).then((response) => {
+            window.location.href = '/game';
         }).catch((error) => {
             console.error('Error:', error);
             label.innerHTML = 'Error editing data';

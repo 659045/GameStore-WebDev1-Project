@@ -17,6 +17,10 @@ class GameService {
         return $this->gameRepository->getGameById($id);
     }
 
+    public function getGameByTitle($title) {
+        return $this->gameRepository->getGameByTitle($title);
+    }
+
     public function insert($game) {
         return $this->gameRepository->insert($game);
     }

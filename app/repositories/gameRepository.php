@@ -20,8 +20,23 @@ class GameRepository extends Repository {
 
     public function getGameById($id) {
         try {
-            $stmt = $this->connection->prepare("SELECT * FROM game where :id = ?");
-            $stmt->bindParam(1, $id, PDO::PARAM_INT);
+            $stmt = $this->connection->prepare("SELECT * FROM game where id = :id");
+            $stmt->execute(array(':id' => $id));
+
+            $stmt->setFetchMode(PDO::FETCH_CLASS, 'Game');
+            $game = $stmt->fetch();
+    
+            return $game;
+        } catch (PDOException $e) {
+            echo $e;
+        }
+    }
+
+    public function getGameByTitle($title) {
+        try {
+            $stmt = $this->connection->prepare("SELECT * FROM game where title = :title");
+            $stmt->execute(array(':title' => $title));
+
             $stmt->setFetchMode(PDO::FETCH_CLASS, 'Game');
             $game = $stmt->fetch();
     
@@ -73,9 +88,8 @@ class GameRepository extends Repository {
 
     public function delete($id) {
         try {
-            $stmt = $this->connection->prepare("DELETE FROM game WHERE id = ?");
-            $stmt->bindParam(1, $id, PDO::PARAM_INT);
-            $stmt->execute();
+            $stmt = $this->connection->prepare("DELETE FROM game WHERE id = :id");
+            $stmt->execute(array(':id' => $id));
         
             return;
         } catch (PDOException $e) {

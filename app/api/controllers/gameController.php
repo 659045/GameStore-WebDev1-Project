@@ -13,16 +13,24 @@ class GameController {
         try {
             switch ($_SERVER["REQUEST_METHOD"]) {
                 case 'GET':
-                    $games = $this->gameService->getAll();
                     header("Content-type: application/json");
-                    echo json_encode($games);
+                    if (isset($_GET['id'])) {
+                        $game = $this->gameService->getGameById(htmlspecialchars($_GET['id']));
+                        echo json_encode($game);
+                    } elseif (isset($_GET['title'])) {
+                        $game = $this->gameService->getGameByTitle(htmlspecialchars($_GET['title']));
+                        echo json_encode($game);
+                    } else {
+                        $games = $this->gameService->getAll();
+                        echo json_encode($games);
+                    }
                     break;
                 case 'POST':
-                    $this->insertGame();
-                    break;
-                case 'PUT':
-                    $data = json_decode(file_get_contents('php://input'));
-                    $this->editGame($data);
+                    if (isset($_POST['id'])) {
+                       $this->editGame();
+                    } else {
+                        $this->insertGame();
+                    }
                     break;
                 case 'DELETE':
                     $data = json_decode(file_get_contents('php://input'));
@@ -57,12 +65,12 @@ class GameController {
         $this->gameService->insert($game);
     }
 
-    function editGame($data) {
+    function editGame() {
         $game = new Game();
-        $game->setId(htmlspecialchars($data->id));
-        $game->setTitle(htmlspecialchars($data->title));
-        $game->setDescription(htmlspecialchars($data->description));
-        $game->setPrice(htmlspecialchars($data->price));
+        $game->setId(htmlspecialchars($_POST['id']));
+        $game->setTitle(htmlspecialchars($_POST['title']));
+        $game->setDescription(htmlspecialchars($_POST['description']));
+        $game->setPrice(htmlspecialchars($_POST['price']));
 
         $gameImage = $_FILES['image'];
         if ($gameImage && $gameImage['error'] == 0) {

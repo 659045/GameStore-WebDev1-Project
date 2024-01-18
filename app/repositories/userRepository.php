@@ -18,10 +18,24 @@ class UserRepository extends Repository {
         }
     }
 
-    public function getByUsername($username) {
+    public function getUserByUsername($username) {
         try {
             $stmt = $this->connection->prepare("SELECT * FROM user WHERE username = :username");
-            $stmt->execute(array(':username' => htmlspecialchars($username)));
+            $stmt->execute(array(':username' => $username));
+    
+            $stmt->setFetchMode(PDO::FETCH_CLASS, 'User');
+            $user = $stmt->fetch();
+    
+            return $user;
+        } catch (PDOException $e) {
+            echo $e;	
+        }
+    }
+
+    public function getUserByEmail($email) {
+        try {
+            $stmt = $this->connection->prepare("SELECT * FROM user WHERE email = :email");
+            $stmt->execute(array(':email' => $email));
     
             $stmt->setFetchMode(PDO::FETCH_CLASS, 'User');
             $user = $stmt->fetch();
@@ -74,7 +88,7 @@ class UserRepository extends Repository {
     public function delete($id) {
         try {
             $stmt = $this->connection->prepare("DELETE FROM user WHERE id = :id");
-            $results = $stmt->execute(array(':id' => htmlspecialchars($id)));
+            $results = $stmt->execute(array(':id' => $id));
 
             return $results;
         } catch (PDOException $e) {
@@ -85,7 +99,7 @@ class UserRepository extends Repository {
     public function verifyLoginCredentials(string $username, $passwd) {
         try {
             $stmt = $this->connection->prepare("SELECT * FROM user WHERE username = :username AND password = :passwd");
-            $stmt->execute(array(':username' => htmlspecialchars($username), ':passwd' => htmlspecialchars($passwd)));
+            $stmt->execute(array(':username' => $username, ':passwd' => $passwd));
 
             return $stmt->rowCount() == 1 ? true : false;
         } catch (PDOException $e) {
