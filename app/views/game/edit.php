@@ -8,7 +8,7 @@ include __DIR__ . '/../header.php';
 
 <div>
     <form method="POST">
-        <input type="number" id="idField" name="id" value="<?php echo $game->getId(); ?>" hidden required><br>
+        <input type="hidden" id="idField" name="id" value="<?php echo $game->getId(); ?>" required><br>
         <label for="title">Title:</label><br>
         <input type="text" id="titleInput" name="title" value="<?php echo $game->getTitle(); ?>" required><br>
         <label for="description">Description:</label><br>
