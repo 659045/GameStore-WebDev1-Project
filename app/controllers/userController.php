@@ -20,6 +20,7 @@ class UserController {
 
     public function upgrade() {
         if (isset($_SESSION['username']) && isset($_SESSION['role']) && $_SESSION['role'] == 'normal') {
+            $user = $this->userService->getUserByUsername($_SESSION['username']);
             require_once __DIR__ . '/../views/user/upgrade.php';
         } else {
             header('Location: /404');

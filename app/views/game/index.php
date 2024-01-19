@@ -60,12 +60,11 @@ include __DIR__ . '/../header.php';
     }
 
     function insertGame(data) {
-        //TODO remember to change back to localhost
         fetchData('/game?title=' + data.get('title')).then((game) => {
             if (game) {
                 label.innerHTML = 'Game already exists';
             } else {
-                postForm('http://localhost:8888/api/game', data).then((response) => {
+                postForm('/game', data).then((response) => {
                     fetchData('/game').then((response) => {
                         generateTable(response);
                     }).catch(() => {
@@ -98,19 +97,14 @@ include __DIR__ . '/../header.php';
                 id: id
             };
 
-            //TODO change to localhost later
-            deleteData('http://localhost:8888/api/game', data)
-            .then(() => {
-                fetchData('/game')
-                .then((responseData) => {
+            deleteData('/game', data).then(() => {
+                fetchData('/game').then((responseData) => {
                     console.log(responseData);
                     generateTable(responseData);
-                })
-                .catch((error) => {
+                }).catch((error) => {
                     label.innerHTML = 'Game deleted successfully';
                 })
-            })
-            .catch((error) => {
+            }).catch((error) => {
                 console.error('Error:', error);
                 label.innerHTML = 'Error deleting game';
             });

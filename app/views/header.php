@@ -23,7 +23,12 @@
               echo '<li class="nav-item ml-auto"><a href="/game" class="nav-link">Manage games</a></li>';
             } 
           ?>
-          <li class="nav-item"><a href="/cart" class="nav-link">Shopping Cart</a></li>
+          <? 
+            if (isset($_SESSION['username'])) {
+              echo '<li class="nav-item"><a href="/cart" class="nav-link">Shopping Cart</a></li>';
+            }
+          ?>
+          
           <? 
             if (isset($_SESSION['username']) && ($_SESSION['role'] == 'premium')) {
               echo '<li class="nav-item"><a href="/user/wishlist" class="nav-link">Wish List</a></li>';
@@ -43,7 +48,6 @@
                 echo '<li class="nav-item"><a href="/signup"><button class="btn btn-primary mt-0" style="width: 100%"><i class="fa fa-user userIcon mr-2"></i>Sign Up</button></a></li>';
             }
           ?>
-          
         </ul>
       </header>
 

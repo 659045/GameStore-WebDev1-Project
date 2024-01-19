@@ -40,7 +40,7 @@ include __DIR__ . '/../footer.php';
             if (user) {
                 label.innerHTML = 'User already exists';
             } else {
-                postForm('http://localhost:8888/api/user', data).then((response) => {
+                postForm('/user', data).then((response) => {
                     window.location.href = '/login';
                 }).catch((error) => {
                     console.log(error);

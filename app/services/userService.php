@@ -31,4 +31,9 @@ class UserService {
         $repository = new UserRepository();
         return $repository->delete($id);
     }
+
+    public function upgrade($id) {
+        $repository = new UserRepository();
+        return $repository->upgrade($id);
+    }
 }

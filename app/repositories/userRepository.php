@@ -96,6 +96,17 @@ class UserRepository extends Repository {
         }
     }
 
+    public function upgrade($id) {
+        try {
+            $stmt = $this->connection->prepare("UPDATE user SET role = 'premium' WHERE id = :id");
+            $results = $stmt->execute(array(':id' => $id));
+
+            return $results;
+        } catch (PDOException $e) {
+            echo $e;
+        }
+    }
+
     public function verifyLoginCredentials(string $username, $passwd) {
         try {
             $stmt = $this->connection->prepare("SELECT * FROM user WHERE username = :username AND password = :passwd");

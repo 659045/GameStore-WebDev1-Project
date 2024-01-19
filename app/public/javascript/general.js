@@ -2,9 +2,9 @@ function delay(time) {
   return new Promise((resolve) => setTimeout(resolve, time));
 }
 
-async function postForm(url = '', form) {
+async function postForm(path = '', form) {
   try {
-    const response = await fetch(url, {
+    const response = await fetch('http://localhost:8888/api' + path, {
       method: 'POST',
       body: form,
     });
@@ -15,9 +15,9 @@ async function postForm(url = '', form) {
   }
 }
 
-async function postData(url = '', data = {}) {
+async function postData(path = '', data = {}) {
   try {
-    const response = await fetch(url, {
+    const response = await fetch('http://localhost:8888/api' + path, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -31,9 +31,9 @@ async function postData(url = '', data = {}) {
   }
 }
 
-async function deleteData(url = '', data = {}) {
+async function deleteData(path = '', data = {}) {
   try {
-    const response = await fetch(url, {
+    const response = await fetch('http://localhost:8888/api' + path, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',

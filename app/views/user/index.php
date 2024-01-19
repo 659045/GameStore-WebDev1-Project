@@ -10,6 +10,7 @@ include __DIR__ . '/../header.php';
 <form>
   <div class="form-group d-flex flex-column">
     <input type="hidden" class="form-control" id="idInput" name="id" value="<? echo $user->getId(); ?>">
+    <h2 class="mb-3"><? echo $user->getRole(); ?> account</h2>
     <label for="email">Email address</label>
     <input type="email" class="form-control" id="emailInput" name="email" value="<? echo $user->getEmail(); ?>" placeholder="Enter email" required>
     <label for="username">Username</label>
@@ -40,12 +41,13 @@ include __DIR__ . '/../footer.php';
     })
 
     function handleEditInfo(event) {
-        console.log('edit info');
         event.preventDefault();
+        label = document.getElementById('error');
 
-        const data = new FormData(event.target);
+        const form   = new FormData(document.querySelector('form'));
+        console.log(form);
 
-        postForm('http://localhost:8888/api/user', data).then((response) => {
+        postForm('/user', form).then((response) => {
             label.innerHTML = 'User info edited successfully';
         }).catch((error) => {
             console.log(error);
@@ -53,13 +55,21 @@ include __DIR__ . '/../footer.php';
         })
     }
 
-    function handleDeleteAccount() {
-        const data = {
-            id: document.querySelector('#idInput').value
-        }
+    function handleDeleteAccount(event) {
+        if (confirm('Are you sure you want to delete your account?')) {
+            event.preventDefault();
 
-        deleteData('http://localhost:8888/api/user', data);
-        window.location.href = '/logout';
+            const data = {
+                id: document.querySelector('#idInput').value
+            }
+
+            deleteData('/user', data).then((response) => {
+                window.location.href = '/logout';
+            }).catch((error) => {
+                console.log('error', error);
+                label.innerHTML = 'Error deleting user';
+            })
+        }
     }
 </script>
 

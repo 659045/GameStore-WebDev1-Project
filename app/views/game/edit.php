@@ -34,7 +34,7 @@ include __DIR__ . '/../header.php';
         const data = new FormData(event.target);
         
         //TODO remember to change back to localhost
-        postForm('http://localhost:8888/api/game', data).then((response) => {
+        postForm('/game', data).then((response) => {
             window.location.href = '/game';
         }).catch((error) => {
             console.error('Error:', error);

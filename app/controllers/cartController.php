@@ -1,27 +1,20 @@
 <?php
 require_once __DIR__ . '/../services/cartService.php';
-require_once __DIR__ . '/../services/gameService.php';
 
 class CartController {
 
-    private $gameService;
+    private $cartService;
 
     function __construct() {
-        $this->gameService = new GameService();
+        $this->cartService = new CartService();
     }
 
     public function index() {
-        $cart = array();
-        $total = 0;
-
-        if (isset($_SESSION["cart"])) {
-            $cart = $_SESSION["cart"];
+        if (isset($_SESSION['username'])) {
+            $cart = $this->cartService->getCart();
+            require_once __DIR__ . '/../views/cart/index.php';
+        }  else {
+            header('Location: /404');
         }
-
-        foreach ($cart as $item => $value) {
-            $game = $this->gameService->getGameById($value);
-            $total += ($game->getPrice());
-        }
-        require_once __DIR__ . '/../views/cart/index.php';
     }
 }

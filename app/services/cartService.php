@@ -1,72 +1,63 @@
 <?php
-require_once __DIR__ . '/../services/gameService.php';
 
 class CartService {
 
-    private $gameService;
-
-    function __construct() {
-        $this->gameService = new GameService();
+    public function getCart() {
+        return $_SESSION["cart"] ?? [];
     }
 
     public function insert($id) {
-        $cart = array();
-
-        if(isset($_SESSION["cart"])) {
-            $cart = $_SESSION["cart"];
+        if(!isset($_SESSION["cart"])) {
+            $_SESSION["cart"] = array();
         }
 
-        if(in_array($id, array_keys($cart))) {
+        if(in_array($id, $_SESSION["cart"])) {
             return;
         } else {
-            $cart[$id] = $id;
+            array_push($_SESSION["cart"], $id);
         }
-
-        $_SESSION["cart"] = $cart;
     }
 
     public function delete($id) {
-        $cart = array();
-
-        if(isset($_SESSION["cart"])) {
-            $cart = $_SESSION["cart"];
+        if (!isset($_SESSION["cart"])) {
+            return;
         }
 
-        if(in_array($id, array_keys($cart))) {
-            unset($cart[$id]);
+        $index = array_search($id, $_SESSION["cart"]);
+        if ($index) {
+            unset($_SESSION["cart"][$index]);
         }
-
-        $_SESSION["cart"] = $cart;
     }
 
-    public function getAmount() {
-        $cart = array();
-        $count = 0;
+    //TODO unused functions
+    // public function getAmount() {
+    //     $cart = array();
+    //     $count = 0;
 
-        if(isset($_SESSION["cart"])) {
-            $cart = $_SESSION["cart"];
-        }
+    //     if(isset($_SESSION["cart"])) {
+    //         $cart = $_SESSION["cart"];
+    //     }
 
-        foreach($cart as $item) {
-            $count++;
-        }
+    //     foreach($cart as $item) {
+    //         $count++;
+    //     }
 
-        return $count;
-    }
+    //     return $count;
+    // }
 
-    public function getTotalPrice() {
-        $cart = array();
-        $total = 0;
+    // public function getTotalPrice() {
+    //     $cart = array();
+    //     $total = 0;
 
-        if(isset($_SESSION["cart"])) {
-            $cart = $_SESSION["cart"];
-        }
+    //     if(isset($_SESSION["cart"])) {
+    //         $cart = $_SESSION["cart"];
+    //     }
 
-        foreach($cart as $item => $value) {
-            $game = $this->gameService->getGameById($value);
-            $total += ($game->getPrice());
-        }
+    //     foreach($cart as $item => $value) {
+    //         $game = $this->gameService->getGameById($value);
+    //         $total += ($game->getPrice());
+    //     }
 
-        return $total;
-    }
+    //     return $total;
+    // }
 }

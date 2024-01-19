@@ -26,11 +26,10 @@ class UserController {
                     }
                     break;
                 case "POST":
-                    $this->insertUser();
-                    break;
-                case "PUT":
-                    $data = json_decode(file_get_contents('php://input'));
-                    $this->editUser($data);
+                    if (isset($_POST['id']))
+                        $this->editUser();
+                    else
+                        $this->insertUser();
                     break;
                 case "DELETE":
                     $data = json_decode(file_get_contents('php://input'));
@@ -54,13 +53,13 @@ class UserController {
         $this->userService->insert($user);
     }
 
-    public function editUser($data) {
+    public function editUser() {
         $user = new User();
-        $user->setId(htmlspecialchars($data->id));
-        $user->setEmail(htmlspecialchars($data->email));
-        $user->setUsername(htmlspecialchars($data->username));
-        $user->setPassword(htmlspecialchars($data->password));
-        $user->setRole(htmlspecialchars($data->role));
+        $user->setId(htmlspecialchars($_POST['id']));
+        $user->setEmail(htmlspecialchars($_POST['email']));
+        $user->setUsername(htmlspecialchars($_POST['username']));
+        $user->setPassword(htmlspecialchars($_POST['password']));
+        $user->setRole(htmlspecialchars($_POST['role']));
 
         $this->userService->edit($user);
     }

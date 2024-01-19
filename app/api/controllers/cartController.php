@@ -13,17 +13,14 @@ class CartController {
         try {
             switch ($_SERVER['REQUEST_METHOD']) {
                 case 'GET':
-                    $cart = array();
-
-                    if (isset($_SESSION["cart"])) {
-                        $cart = $_SESSION["cart"];
-                    }
+                    $cart = $this->cartService->getCart();
 
                     header("Content-type: application/json");
                     echo json_encode($cart);
                     break;
                 case 'POST':
-                    $this->insert();
+                    $data = json_decode(file_get_contents('php://input'));
+                    $this->insert(htmlspecialchars($data->id));
                     break;
                 case 'DELETE':
                     $data = json_decode(file_get_contents('php://input'));
@@ -37,8 +34,7 @@ class CartController {
         }
     }
 
-    public function insert() {
-        $id = htmlspecialchars($_POST['id']);
+    public function insert($id) {
         $this->cartService->insert($id);
     }
 

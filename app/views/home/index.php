@@ -11,19 +11,27 @@ include __DIR__ . '/../header.php';
 </div>
 <div class="row">
   <?php foreach ($games as $game) { ?>
-    <div class="col-lg-3 col-md-6 col-sm-12">
-      <div class="card mb-5 itemCard">
+    <div class="col-lg-4 col-md-6 col-sm-12">
+      <div class="card mb-5">
         <div class="card-body d-flex flex-column">
           <?
             if (isset($_SESSION['role']) && ($_SESSION['role'] === 'premium' || $_SESSION['role'] === 'admin')) {
-              echo '<button id="btnWishlist" value="<? echo $game->getId() ?>" class="btn btn-primary w-25 ml-auto wishlist-button mb-3"><i id="heartIcon<? echo $game->getId() ?>" class="fa fa-heart"></i></button>';
+              echo '<button value="' . $game->getId() . '" class="btn btn-primary w-25 ml-auto wishlist-button mb-3"><i id="heartIcon' . $game->getId() . '" class="fa fa-heart"></i></button>';
             }
           ?>
           <img src="/img/<? echo $game->getImage() ?>"/>
+          <small class="text-muted mt-3">Title</small>
           <p><? echo $game->getTitle() ?></p>
+          <small class="text-muted">Description</small>
           <p><? echo $game->getDescription() ?></p>
+          <small class="text-muted">Price</small>
           <p><? echo $game->getPrice() ?></p>
-          <button class="btn btn-primary w-50 ml-auto">Add to cart</button>
+          <?
+            if (isset($_SESSION['username'])) {
+              echo '<button class="btn btn-primary w-50 ml-auto add-to-cart-button" value="' . $game->getId() . '">Add to cart</button>';
+            }
+          ?>
+          <label for="error" id="labelError<? echo $game->getId(); ?>" class="p-2 ml-auto"></label>
         </div>
       </div>
     </div>
@@ -34,14 +42,16 @@ include __DIR__ . '/../header.php';
 include __DIR__ . '/../footer.php'; 
 ?>
 
+<script src="/javascript/general.js"></script>
 <script>
   document.addEventListener('DOMContentLoaded', function () {
-    var wishlistButtons = document.querySelectorAll('.wishlist-button');
+    const wishlistButtons = document.querySelectorAll('.wishlist-button');
+    const addToCartButtons = document.querySelectorAll('.add-to-cart-button');
 
     wishlistButtons.forEach(function (button) {
       button.addEventListener("click", function () {
-        var iconId = button.value
-        var heartIcon = document.getElementById('heartIcon' + iconId);
+        const gameId = button.value
+        const heartIcon = document.getElementById('heartIcon' + gameId);
 
         if (heartIcon.classList.contains('fa-heart')) {
           heartIcon.classList.remove('fa-heart');
@@ -56,15 +66,48 @@ include __DIR__ . '/../footer.php';
         }
       });
     });
+
+    addToCartButtons.forEach(function (button) {
+      button.addEventListener("click", function () {
+        const gameId = button.value;
+        label = document.getElementById('labelError' + gameId);
+        label.innerHTML = '';
+
+        const data = {
+          id: gameId
+        }
+
+        postData('/cart', data).then((response) => {
+          label.innerHTML = 'Game added to cart';
+        }).catch((error) => {
+          console.log(error);
+          label.innerHTML = 'Error adding game to cart';
+        });
+      });
+    });
   });
 </script>
 
 <style>
   .front-image {
-    height: 50%;
+    height: 500px;
     width: 100%;
     display: block;
     margin: 2% auto 5% auto
+  }
+
+  p {
+    overflow: hidden;
+    width: 200px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  img {
+    height: 300px;
+    width: 300px;
+    display: block;
+    margin: 0 auto;
   }
 </style>
   
