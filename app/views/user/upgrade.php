@@ -7,6 +7,7 @@ include __DIR__ . '/../header.php';
 </head>
 
 <h1>Upgrade to premium</h1>
+<h2>Get Wish list feature</h2>
 
 <form>
   <div class="form-group d-flex flex-column">
@@ -35,8 +36,10 @@ include __DIR__ . '/../footer.php';
         event.preventDefault();
         const data = new FormData(event.target);
 
+        //TODO check if user is really premium before hiding nav button
         postForm('/upgrade', data).then((response) => {
-            window.location.href = '/user';
+            alert('User upgraded to premium, wish list feature unlocked');
+            window.location.href = '/';
             <? $_SESSION['role'] = 'premium'; ?>
         }).catch((error) => {
             console.log(error);

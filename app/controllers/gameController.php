@@ -1,12 +1,15 @@
 <?php
 require_once __DIR__ . '/../services/gameService.php';
+require_once __DIR__ . '/../services/ownedGameService.php';
 
 class GameController {
 
     private $gameService;
+    private $ownedGameService;
 
     function __construct() {
         $this->gameService = new GameService;
+        $this->ownedGameService = new OwnedGameService;
     }
 
     public function index() {

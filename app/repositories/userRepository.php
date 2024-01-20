@@ -109,12 +109,15 @@ class UserRepository extends Repository {
 
     public function verifyLoginCredentials(string $username, $passwd) {
         try {
-            $stmt = $this->connection->prepare("SELECT * FROM user WHERE username = :username AND password = :passwd");
-            $stmt->execute(array(':username' => $username, ':passwd' => $passwd));
+            $stmt = $this->connection->prepare("SELECT * FROM user WHERE username = :username");
+            $stmt->execute(array(':username' => $username));
 
-            return $stmt->rowCount() == 1 ? true : false;
+            $stmt->setFetchMode(PDO::FETCH_CLASS, 'User');
+            $user = $stmt->fetch();
+
+            return $user && password_verify($passwd, $user->getPassword());
         } catch (PDOException $e) {
-            echo $e;
+            echo $e->getMessage();
         }
     }
 }

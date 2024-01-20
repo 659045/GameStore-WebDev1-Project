@@ -23,6 +23,7 @@ class LoginController {
     
                 if ($this->loginService->login($username, $password)) {
                     $_SESSION["username"] = $username;
+                    $_SESSION["user_id"] = $this->userService->getUserByUsername($username)->getId();
 
                     $user = $this->userService->getUserByUsername($username);
 

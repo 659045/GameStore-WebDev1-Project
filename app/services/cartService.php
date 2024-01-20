@@ -24,40 +24,8 @@ class CartService {
         }
 
         $index = array_search($id, $_SESSION["cart"]);
-        if ($index) {
+        if ($index !== false) {
             unset($_SESSION["cart"][$index]);
         }
     }
-
-    //TODO unused functions
-    // public function getAmount() {
-    //     $cart = array();
-    //     $count = 0;
-
-    //     if(isset($_SESSION["cart"])) {
-    //         $cart = $_SESSION["cart"];
-    //     }
-
-    //     foreach($cart as $item) {
-    //         $count++;
-    //     }
-
-    //     return $count;
-    // }
-
-    // public function getTotalPrice() {
-    //     $cart = array();
-    //     $total = 0;
-
-    //     if(isset($_SESSION["cart"])) {
-    //         $cart = $_SESSION["cart"];
-    //     }
-
-    //     foreach($cart as $item => $value) {
-    //         $game = $this->gameService->getGameById($value);
-    //         $total += ($game->getPrice());
-    //     }
-
-    //     return $total;
-    // }
 }

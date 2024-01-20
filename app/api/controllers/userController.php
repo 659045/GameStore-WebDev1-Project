@@ -45,9 +45,9 @@ class UserController {
 
     public function insertUser() {
         $user = new User();
-        $user->setEmail($_POST['email']);
-        $user->setUsername($_POST['username']);
-        $user->setPassword($_POST['password']);
+        $user->setEmail(htmlspecialchars($_POST['email']));
+        $user->setUsername(htmlspecialchars($_POST['username']));
+        $user->setPassword(password_hash(htmlspecialchars($_POST['password']), PASSWORD_DEFAULT));
         $user->setRole('normal');
 
         $this->userService->insert($user);
@@ -59,7 +59,6 @@ class UserController {
         $user->setEmail(htmlspecialchars($_POST['email']));
         $user->setUsername(htmlspecialchars($_POST['username']));
         $user->setPassword(htmlspecialchars($_POST['password']));
-        $user->setRole(htmlspecialchars($_POST['role']));
 
         $this->userService->edit($user);
     }

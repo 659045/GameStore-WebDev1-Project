@@ -58,8 +58,8 @@ class PatternRouter
         }
         // dynamically call relevant controller method
 
-            $controllerObj = new $controllerName;
-            $controllerObj->{$methodName}();
+        $controllerObj = new $controllerName;
+        $controllerObj->{$methodName}();
 
     }
 }

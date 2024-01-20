@@ -19,16 +19,16 @@
         <ul class="nav nav-pills">
           <li class="nav-item"><a href="/" class="nav-link">Home</a></li>
           <?
+            if (isset($_SESSION['username'])) {
+              echo '<li class="nav-item ml-auto"><a href="/owned" class="nav-link">My Games</a></li>';
+              echo '<li class="nav-item"><a href="/cart" class="nav-link">Shopping Cart</a></li>';
+            } 
+          ?>
+          <?
             if (isset($_SESSION['username']) && $_SESSION['role'] == 'admin') {
               echo '<li class="nav-item ml-auto"><a href="/game" class="nav-link">Manage games</a></li>';
             } 
           ?>
-          <? 
-            if (isset($_SESSION['username'])) {
-              echo '<li class="nav-item"><a href="/cart" class="nav-link">Shopping Cart</a></li>';
-            }
-          ?>
-          
           <? 
             if (isset($_SESSION['username']) && ($_SESSION['role'] == 'premium')) {
               echo '<li class="nav-item"><a href="/user/wishlist" class="nav-link">Wish List</a></li>';

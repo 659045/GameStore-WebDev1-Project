@@ -3,22 +3,25 @@ include __DIR__ . '/../header.php';
 ?>
 
 <head>
-    <title>Wish List</title>
+    <title>My Games</title>
 </head>
 
-<h1>Wish List</h1>
+<h1>My Games</h1>
+<h3 class="text-muted pt-3 pb-3">Recently Purchased</h3>
+<div class="row"></div>
 
 <?php
 include __DIR__ . '/../footer.php';
 ?>
 
 <script src="/javascript/general.js"></script>
-<!-- <script>
-    generateCart(<? //echo json_encode($cart); ?>);
+<script src="/javascript/general.js"></script>
+<script>
+    generateOwnedGames(<? echo json_encode($ownedGames); ?>);
 
-    function generateCart(cart) {
-        cart.forEach((item) => {
-            fetchData('/game?id=' + item).then((game) => {
+    function generateOwnedGames(ownedGames) {
+        ownedGames.forEach((item) => {
+            fetchData('/game?id=' + item.game_id).then((game) => {
                 generateItemCard(game);
             }).catch((error) => {
                 console.log(error);
@@ -76,4 +79,20 @@ include __DIR__ . '/../footer.php';
 
         document.querySelector('.row').appendChild(cardContainer);
     }
-</script> -->
+</script>
+
+<style>
+  p {
+    overflow: hidden;
+    width: 200px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  img {
+    height: 300px;
+    width: 300px;
+    display: block;
+    margin: 0 auto;
+  }
+</style>
