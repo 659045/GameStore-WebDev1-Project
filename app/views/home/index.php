@@ -71,8 +71,6 @@ include __DIR__ . '/../footer.php';
               game_id: gameId
           }
 
-          console.log(wishlistGame);
-
           if (wishlistGame && wishlistGame.length > 0) {
             deleteData('/wishlist', data).then((response) => {
               heartIcon.classList.remove('fa-heart');

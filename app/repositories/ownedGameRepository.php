@@ -6,7 +6,7 @@ class OwnedGameRepository extends Repository {
 
     public function getAll() {
         try {
-            $stmt = $this->connection->prepare("SELECT * FROM owned_game");
+            $stmt = $this->connection->prepare("SELECT id, user_id, game_id FROM owned_game");
             $stmt->execute();
     
             $stmt->setFetchMode(PDO::FETCH_CLASS, 'OwnedGame');
@@ -20,7 +20,7 @@ class OwnedGameRepository extends Repository {
 
     public function getOwnedGameByUserId($user_id) {
         try {
-            $stmt = $this->connection->prepare("SELECT * FROM owned_game where user_id = :user_id");
+            $stmt = $this->connection->prepare("SELECT id, user_id, game_id FROM owned_game where user_id = :user_id");
             $stmt->execute(array(':user_id' => $user_id));
 
             $stmt->setFetchMode(PDO::FETCH_CLASS, 'OwnedGame');
@@ -34,7 +34,7 @@ class OwnedGameRepository extends Repository {
 
     public function getOwnedGameByUserIdAndGameId($user_id, $game_id) {
         try {
-            $stmt = $this->connection->prepare("SELECT * FROM owned_game where user_id = :user_id AND game_id = :game_id");
+            $stmt = $this->connection->prepare("SELECT id, user_id, game_id FROM owned_game where user_id = :user_id AND game_id = :game_id");
             $stmt->execute(array(':user_id' => $user_id, ':game_id' => $game_id));
 
             $stmt->setFetchMode(PDO::FETCH_CLASS, 'OwnedGame');

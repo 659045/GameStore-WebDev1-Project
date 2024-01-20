@@ -29,8 +29,6 @@ include __DIR__ . '/../footer.php';
     }
 
     function generateItemCard(game) {
-        console.log(game);
-
         const cardContainer = document.createElement('div');
         cardContainer.classList.add('col-lg-4', 'col-md-6', 'col-sm-12');
 

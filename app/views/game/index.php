@@ -54,7 +54,6 @@ include __DIR__ . '/../header.php';
         event.preventDefault();
         const data = new FormData(event.target);
         
-        console.log(data);
         insertGame(data);
     }
 
@@ -101,7 +100,6 @@ include __DIR__ . '/../header.php';
                 showSuccessMessage('Game deleted successfully', labelError);
 
                 fetchData('/game').then((responseData) => {
-                    console.log(responseData);
                     generateTable(responseData);
                 }).catch((error) => {
                     showErrorMessage('Error fetching data', labelError);

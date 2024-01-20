@@ -6,7 +6,7 @@ class GameRepository extends Repository {
 
     public function getAll() {
         try {
-            $stmt = $this->connection->prepare("SELECT * FROM game");
+            $stmt = $this->connection->prepare("SELECT id, title, description, price, image FROM game");
             $stmt->execute();
     
             $stmt->setFetchMode(PDO::FETCH_CLASS, 'Game');
@@ -20,7 +20,7 @@ class GameRepository extends Repository {
 
     public function getGameById($id) {
         try {
-            $stmt = $this->connection->prepare("SELECT * FROM game where id = :id");
+            $stmt = $this->connection->prepare("SELECT id, title, description, price, image FROM game where id = :id");
             $stmt->execute(array(':id' => $id));
 
             $stmt->setFetchMode(PDO::FETCH_CLASS, 'Game');
@@ -34,7 +34,7 @@ class GameRepository extends Repository {
 
     public function getGameByTitle($title) {
         try {
-            $stmt = $this->connection->prepare("SELECT * FROM game where title = :title");
+            $stmt = $this->connection->prepare("SELECT id, title, description, price, image FROM game where title = :title");
             $stmt->execute(array(':title' => $title));
 
             $stmt->setFetchMode(PDO::FETCH_CLASS, 'Game');

@@ -6,7 +6,7 @@ class UserRepository extends Repository {
 
     public function getAll() {
         try {
-            $stmt = $this->connection->prepare("SELECT * FROM user");
+            $stmt = $this->connection->prepare("SELECT id, email, username, password, role FROM user");
             $stmt->execute();
     
             $stmt->setFetchMode(PDO::FETCH_CLASS, 'User');
@@ -20,7 +20,7 @@ class UserRepository extends Repository {
 
     public function getUserByUsername($username) {
         try {
-            $stmt = $this->connection->prepare("SELECT * FROM user WHERE username = :username");
+            $stmt = $this->connection->prepare("SELECT id, email, username, password, role FROM user WHERE username = :username");
             $stmt->execute(array(':username' => $username));
     
             $stmt->setFetchMode(PDO::FETCH_CLASS, 'User');
@@ -34,7 +34,7 @@ class UserRepository extends Repository {
 
     public function getUserByEmail($email) {
         try {
-            $stmt = $this->connection->prepare("SELECT * FROM user WHERE email = :email");
+            $stmt = $this->connection->prepare("SELECT id, email, username, password, role FROM user WHERE email = :email");
             $stmt->execute(array(':email' => $email));
     
             $stmt->setFetchMode(PDO::FETCH_CLASS, 'User');

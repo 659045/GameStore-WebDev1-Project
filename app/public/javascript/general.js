@@ -11,7 +11,6 @@ async function postForm(path = '', form) {
       body: form,
     });
 
-    console.log('postForm Response', response);
     return response;
   } catch(error) {
     throw error;
@@ -28,7 +27,6 @@ async function postData(path = '', data = {}) {
       body: JSON.stringify(data),
     });
 
-    console.log('postData Response', response);
   } catch(error) {
     throw error;
   }
@@ -44,7 +42,6 @@ async function deleteData(path = '', data = {}) {
       body: JSON.stringify(data),
     });
 
-    console.log('deleteData Response', response);
   } catch(error) {
     throw error;
   }
