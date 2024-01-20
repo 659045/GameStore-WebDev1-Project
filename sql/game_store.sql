@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: mysql
--- Generation Time: Jan 20, 2024 at 07:25 PM
+-- Generation Time: Jan 20, 2024 at 07:27 PM
 -- Server version: 11.2.2-MariaDB-1:11.2.2+maria~ubu2204
 -- PHP Version: 8.2.14
 
@@ -69,9 +69,7 @@ INSERT INTO `owned_game` (`id`, `user_id`, `game_id`) VALUES
 (4, 3, 3),
 (5, 2, 9),
 (6, 2, 7),
-(7, 2, 1),
-(8, 10, 1),
-(9, 10, 9);
+(7, 2, 1);
 
 -- --------------------------------------------------------
 
@@ -94,8 +92,7 @@ CREATE TABLE `user` (
 INSERT INTO `user` (`id`, `email`, `username`, `password`, `role`) VALUES
 (1, 'admin@gmail.com', 'admin', '$2y$10$OztE0Ck917ntHVohb4LSdeoXaRSdrYzlCOeRVkN/ovcIvOi9vM40e', 'admin'),
 (2, 'premium@gmail.com', 'premium', '$2y$10$c41LVUXL0TusPRDZS0M.O.6rj6B.9483r31VGOBcct7DGVnyOcaYS', 'premium'),
-(3, 'normal@gmail.com', 'normal', '$2y$10$EtdBvttcHp6w.TDjABaS5O5v0QBqSDtPp7/KjaSh1dmNquHZWqyE.', 'normal'),
-(4, 'test@gmail.com', 'test', '$2y$10$5wazpOWkOa08ZrKixdpomujx.IrolJc0ddrE030GLYlF2O2ux1tt.', 'premium');
+(3, 'normal@gmail.com', 'normal', '$2y$10$EtdBvttcHp6w.TDjABaS5O5v0QBqSDtPp7/KjaSh1dmNquHZWqyE.', 'normal');
 
 -- --------------------------------------------------------
 
