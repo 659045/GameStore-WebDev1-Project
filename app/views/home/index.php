@@ -16,7 +16,7 @@ include __DIR__ . '/../header.php';
         <div class="card-body d-flex flex-column">
           <?
             if (isset($_SESSION['role']) && ($_SESSION['role'] === 'premium' || $_SESSION['role'] === 'admin')) {
-              echo '<button value="' . $game->getId() . '" class="btn btn-primary w-25 ml-auto wishlist-button mb-3"><i id="heartIcon' . $game->getId() . '" class="fa fa-heart"></i></button>';
+              echo '<button value="' . $game->getId() . '" class="btn btn-primary w-25 ml-auto wishlist-button mb-3"><i id="heartIcon' . $game->getId() . '" class="fa fa-heart-o"></i></button>';
             }
           ?>
           <img src="/img/<? echo $game->getImage() ?>"/>
@@ -31,7 +31,7 @@ include __DIR__ . '/../header.php';
               echo '<button class="btn btn-primary w-50 ml-auto add-to-cart-button" value="' . $game->getId() . '">Add to cart</button>';
             }
           ?>
-          <label for="error" id="labelError<? echo $game->getId(); ?>" class="p-2 ml-auto"></label>
+          <label id="labelError<? echo $game->getId(); ?>" class="p-2 mt-2 ml-auto label"></label>
         </div>
       </div>
     </div>
@@ -48,22 +48,54 @@ include __DIR__ . '/../footer.php';
     const wishlistButtons = document.querySelectorAll('.wishlist-button');
     const addToCartButtons = document.querySelectorAll('.add-to-cart-button');
 
+    fetchData('/wishlist?user_id=<? echo $_SESSION['user_id']; ?>').then((wishlist) => {
+      wishlist.forEach((item) => {
+        const heartIcon = document.getElementById('heartIcon' + item.game_id);
+        heartIcon.classList.remove('fa-heart-o');
+        heartIcon.classList.add('fa-heart');
+      });
+    }).catch((error) => {
+      console.log(error);
+    });
+
     wishlistButtons.forEach(function (button) {
       button.addEventListener("click", function () {
         const gameId = button.value
         const heartIcon = document.getElementById('heartIcon' + gameId);
 
-        if (heartIcon.classList.contains('fa-heart')) {
-          heartIcon.classList.remove('fa-heart');
-          heartIcon.classList.add('fa-heart-o');
+        fetchData('/wishlist?user_id=<? echo $_SESSION['user_id']; ?>&game_id=' + gameId).then((wishlistGame) => {
+          label = document.getElementById('labelError' + gameId);
 
-          //TODO add to wishlist
-        } else {
-          heartIcon.classList.remove('fa-heart-o');
-          heartIcon.classList.add('fa-heart');
+          const data = {
+              user_id: <? echo $_SESSION['user_id']; ?>,
+              game_id: gameId
+          }
 
-          //TODO remove from wishlist
-        }
+          console.log(wishlistGame);
+
+          if (wishlistGame && wishlistGame.length > 0) {
+            deleteData('/wishlist', data).then((response) => {
+              heartIcon.classList.remove('fa-heart');
+              heartIcon.classList.add('fa-heart-o');
+              showSuccessMessage('Game removed from wishlist', label);
+            }).catch((error) => {
+              console.log(error);
+              showErrorMessage('Error removing game from wishlist', label);
+            });
+          } else {
+            postData('/wishlist', data).then((response) => {
+              heartIcon.classList.remove('fa-heart-o');
+              heartIcon.classList.add('fa-heart');
+              showSuccessMessage('Game added to wishlist', label);
+            }).catch((error) => {
+              console.log(error);
+              showErrorMessage('Error adding game to wishlist', label);
+            });
+          }
+        }).catch((error) => {
+          console.log(error);
+          showErrorMessage('Error adding game to wishlist', label);
+        });
       });
     });
 
@@ -71,17 +103,26 @@ include __DIR__ . '/../footer.php';
       button.addEventListener("click", function () {
         const gameId = button.value;
         label = document.getElementById('labelError' + gameId);
-        label.innerHTML = '';
 
-        const data = {
-          id: gameId
-        }
+        fetchData('/owned?user_id=<? echo $_SESSION['user_id']; ?>&game_id=' + gameId).then((ownedGame) => {
+          if (ownedGame) {
+            showErrorMessage('Game already owned', label);
+            return;
+          } else {
+            const data = {
+              id: gameId
+            }
 
-        postData('/cart', data).then((response) => {
-          label.innerHTML = 'Game added to cart';
+            postData('/cart', data).then((response) => {
+              showSuccessMessage('Game added to cart', label);
+            }).catch((error) => {
+              console.log(error);
+              showErrorMessage('Error adding game to cart', label);
+            });
+          }
         }).catch((error) => {
           console.log(error);
-          label.innerHTML = 'Error adding game to cart';
+          showErrorMessage('Error adding game to cart', label);
         });
       });
     });

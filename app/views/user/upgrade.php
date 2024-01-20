@@ -14,7 +14,7 @@ include __DIR__ . '/../header.php';
     <input type="hidden" class="form-control" id="idInput" name="id" value="<? echo $user->getId(); ?>">
     <h2 class="mx-auto">Only €9.99!!</h2>
     <button type="submit" id="upgradeButton" class="btn btn-primary mt-3 mx-auto">Upgrade to premium</button>
-    <label id="error"></label>
+    <label id="error" class="label mt-3"></label>
   </div>
 </form>
 
@@ -36,11 +36,9 @@ include __DIR__ . '/../footer.php';
         event.preventDefault();
         const data = new FormData(event.target);
 
-        //TODO check if user is really premium before hiding nav button
         postForm('/upgrade', data).then((response) => {
             alert('User upgraded to premium, wish list feature unlocked');
-            window.location.href = '/';
-            <? $_SESSION['role'] = 'premium'; ?>
+            window.location.href = '/';  
         }).catch((error) => {
             console.log(error);
             label.innerHTML = 'Error upgrading user';

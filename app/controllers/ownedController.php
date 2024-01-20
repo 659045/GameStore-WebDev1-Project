@@ -11,7 +11,7 @@ class OwnedController {
 
     public function index() {
         if (isset($_SESSION['username'])) {
-            $ownedGames = $this->ownedGameService->getOwnedGameByUserId(1);
+            $ownedGames = $this->ownedGameService->getOwnedGameByUserId($_SESSION['user_id']);
 
             require_once __DIR__ . '/../views/owned/index.php';
         } else {

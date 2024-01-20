@@ -68,14 +68,12 @@ class UserRepository extends Repository {
     public function edit($user) {
         try {
             $stmt = $this->connection->prepare(
-                "UPDATE user SET email = :email, username = :username, password = :password, role = :role WHERE id = :id"
+                "UPDATE user SET email = :email, username = :username WHERE id = :id"
             );
             
             $results = $stmt->execute([
                 ':email' => $user->getEmail(), 
                 ':username' => $user->getUsername(), 
-                ':password' => $user->getPassword(),
-                ':role' => $user->getRole(),
                 ':id' => $user->getId()
             ]);
             

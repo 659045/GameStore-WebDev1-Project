@@ -58,8 +58,9 @@ class UserController {
         $user->setId(htmlspecialchars($_POST['id']));
         $user->setEmail(htmlspecialchars($_POST['email']));
         $user->setUsername(htmlspecialchars($_POST['username']));
-        $user->setPassword(htmlspecialchars($_POST['password']));
 
+        $_SESSION['username'] = $user->getUsername();
+        
         $this->userService->edit($user);
     }
 

@@ -19,7 +19,7 @@ include __DIR__ . '/../header.php';
         <input type="file" id="imageInput" name="image" accept="image/*" value="<?php echo $game->getPrice(); ?>" required><br><br>
         <input type="submit" class="btn btn-primary" value="Edit">
     </form>
-    <label id="error"></label>
+    <label id="labelError" class="label"></label>
 </div>
 
 <script src="../javascript/general.js"></script>
@@ -29,16 +29,16 @@ include __DIR__ . '/../header.php';
 
     function handleSubmit(event) {
         event.preventDefault();
-        const label = document.getElementById('error');
 
         const data = new FormData(event.target);
         
-        //TODO remember to change back to localhost
         postForm('/game', data).then((response) => {
             window.location.href = '/game';
         }).catch((error) => {
             console.error('Error:', error);
-            label.innerHTML = 'Error editing data';
+
+            const labelError = document.getElementById('labelError');
+            showErrorMessage('Error editing game', labelError);
         });
     }
 </script>

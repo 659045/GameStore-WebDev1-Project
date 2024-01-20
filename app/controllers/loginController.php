@@ -16,7 +16,8 @@ class LoginController {
         if (isset($_SESSION["username"])) {
             header('Location: /');
             return;
-        } else {
+        }else {
+            
             if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $username = htmlspecialchars($_POST['username']);
                 $password = htmlspecialchars($_POST['password']);
@@ -38,15 +39,12 @@ class LoginController {
                             $_SESSION["role"] = 'normal';
                             break;
                     }
+
                     header('Location: /');
                     return;
-                } else {
-                    http_response_code(401);
-                    $msg = "Invalid username or password";
-                }    
+                }
             }
         }
-  
         require_once __DIR__ . '/../views/login/index.php';
     }
 }

@@ -15,11 +15,9 @@ include __DIR__ . '/../header.php';
     <input type="email" class="form-control" id="emailInput" name="email" value="<? echo $user->getEmail(); ?>" placeholder="Enter email" required>
     <label for="username">Username</label>
     <input type="text" class="form-control" id="usernameInput" name="username" value="<? echo $user->getUsername(); ?>" placeholder="Enter username" required>
-    <label for="password">Password</label>
-    <input type="password" class="form-control" id="passwordInput" name="password" value="<? echo $user->getPassword(); ?>" placeholder="Password" required>
     <button type="submit" id="editButton" class="btn btn-primary mt-3 mx-auto" @click="handleEditInfo(event)">Edit Info</button>
     <button type="submit" id="deleteButton" class="btn btn-danger mt-3 mx-auto" @click="handleDeleteAccount()">Delete Account</button>
-    <label id="error"></label>
+    <label id="labelError" class="label mt-3"></label>
   </div>
 </form>
 
@@ -29,8 +27,7 @@ include __DIR__ . '/../footer.php';
 
 <script src="../javascript/general.js"></script>
 <script>
-    label = document.getElementById('error');
-    label.innerHTML = '';
+    label = document.getElementById('labelError');
 
     document.addEventListener('DOMContentLoaded', function () {
         const editButton = document.querySelector('#editButton');
@@ -42,16 +39,15 @@ include __DIR__ . '/../footer.php';
 
     function handleEditInfo(event) {
         event.preventDefault();
-        label = document.getElementById('error');
 
         const form   = new FormData(document.querySelector('form'));
         console.log(form);
 
         postForm('/user', form).then((response) => {
-            label.innerHTML = 'User info edited successfully';
+            showSuccessMessage('User info edited successfully', label);
         }).catch((error) => {
             console.log(error);
-            label.innerHTML = 'Error editing user';
+            showErrorMessage('Error editing user', label)
         })
     }
 
@@ -66,8 +62,8 @@ include __DIR__ . '/../footer.php';
             deleteData('/user', data).then((response) => {
                 window.location.href = '/logout';
             }).catch((error) => {
-                console.log('error', error);
-                label.innerHTML = 'Error deleting user';
+                console.log(error);
+                showErrorMessage('Error deleting user', label)
             })
         }
     }

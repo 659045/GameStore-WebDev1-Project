@@ -15,7 +15,6 @@ include __DIR__ . '/../footer.php';
 ?>
 
 <script src="/javascript/general.js"></script>
-<script src="/javascript/general.js"></script>
 <script>
     generateOwnedGames(<? echo json_encode($ownedGames); ?>);
 

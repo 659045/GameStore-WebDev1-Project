@@ -8,12 +8,9 @@ include __DIR__ . '/../header.php';
 
 <div class="d-flex flex-row">
     <h1>Shopping Cart</h1>
-    <btnCheckout class="btn btn-primary ml-auto mt-3 h-50">Checkout</btnCheckout>
+    <label id="labelError" class="ml-auto mt-3 mr-3 label"></label>
+    <btnCheckout class="btn btn-primary mt-3 h-50">Checkout</btnCheckout>
 </div>  
-<!-- <div class="row">
-
-</div> -->
-
 <table class="table">
     <thead>
         <tr>
@@ -43,6 +40,8 @@ include __DIR__ . '/../footer.php';
     const cart = <?php echo json_encode($cart); ?>;
     generateCart(cart);
 
+    const labelError = document.getElementById('labelError');
+
     document.addEventListener('DOMContentLoaded', function () {
         const btnCheckout = document.querySelector('btnCheckout');
         btnCheckout.addEventListener('click', function () {
@@ -52,10 +51,11 @@ include __DIR__ . '/../footer.php';
                     user_id: <?php echo $_SESSION['user_id']; ?>
                 }
 
-                console.log(data);
-
                 postData('/owned', data).then((response) => {
-                    console.log(response);
+                    const tableBody = document.querySelector('.cart-table');
+                    tableBody.innerHTML = '';
+
+                    showSuccessMessage('Checkout successful!', labelError);
                 }).catch((error) => {
                     console.log(error);
                 });
@@ -129,30 +129,26 @@ include __DIR__ . '/../footer.php';
 </script>
 
 <style>
-    body {
-            font-family: Arial, sans-serif;
-        }
+h1 {
+    text-align: center;
+}
 
-        h1 {
-            text-align: center;
-        }
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
+th, td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
 
-        th, td {
-            padding: 10px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-        }
-
-        img {
-            max-width: 80px;
-            max-height: 80px;
-            display: block;
-            margin: 0 auto;
-        }
+img {
+    max-width: 80px;
+    max-height: 80px;
+    display: block;
+    margin: 0 auto;
+}
 </style>

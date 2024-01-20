@@ -34,7 +34,7 @@ include __DIR__ . '/../header.php';
                 </tr>
             </tbody>
         </table>
-        <label id="error"></label>
+        <label id="labelError" class="label"></label>
         <table id="games-table" class="table my-5"></table>
     </div>
 </body>
@@ -43,8 +43,7 @@ include __DIR__ . '/../header.php';
 <script>
     generateTable(<?php echo json_encode($games); ?>);
 
-    label = document.getElementById('error');
-    label.innerHTML = '';
+    const labelError = document.getElementById('labelError');
 
     document.addEventListener('DOMContentLoaded', function () {
         const form = document.querySelector('#insertGameForm');
@@ -62,13 +61,13 @@ include __DIR__ . '/../header.php';
     function insertGame(data) {
         fetchData('/game?title=' + data.get('title')).then((game) => {
             if (game) {
-                label.innerHTML = 'Game already exists';
+                showErrorMessage('Game already exists', labelError);
             } else {
                 postForm('/game', data).then((response) => {
                     fetchData('/game').then((response) => {
                         generateTable(response);
                     }).catch(() => {
-                        label.innerHTML = 'Error fetching data';
+                        showErrorMessage('Error fetching data', labelError)
                     });
 
                     const titleInput = document.getElementById('titleInput');
@@ -80,10 +79,11 @@ include __DIR__ . '/../header.php';
                     descriptionInput.value = '';
                     priceInput.value = '';
                     imageInput.value = '';
-                    label.innerHTML = 'Game added successfully';
+
+                    showSuccessMessage('Game added successfully', labelError);
                 }).catch((error) => {
                     console.error('Error:', error);
-                    label.innerHTML = 'Error adding game';
+                    showErrorMessage('Error adding game', labelError);
                 }); 
             }
         }).catch((error) => {
@@ -97,16 +97,19 @@ include __DIR__ . '/../header.php';
                 id: id
             };
 
-            deleteData('/game', data).then(() => {
+            deleteData('/game', data).then((response) => {
+                showSuccessMessage('Game deleted successfully', labelError);
+
                 fetchData('/game').then((responseData) => {
                     console.log(responseData);
                     generateTable(responseData);
                 }).catch((error) => {
-                    label.innerHTML = 'Game deleted successfully';
+                    showErrorMessage('Error fetching data', labelError);
+                    console.log(error);
                 })
             }).catch((error) => {
                 console.error('Error:', error);
-                label.innerHTML = 'Error deleting game';
+                showErrorMessage('Error deleting game', labelError);
             });
         }
     }
@@ -184,8 +187,7 @@ include __DIR__ . '/../header.php';
 
         editButton.addEventListener('click', function () {
             const gameId = editButton.value;
-            //TODO change to localhost later
-            window.location.href =  "http://localhost:8888/game/edit?id=" + gameId;
+            window.location.href =  "http://localhost/game/edit?id=" + gameId;
         });
 
         return editButton;
@@ -206,6 +208,8 @@ include __DIR__ . '/../header.php';
 
         return deleteButton;
     }
+
+   
 </script>
 
 <?php

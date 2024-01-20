@@ -16,7 +16,7 @@ include __DIR__ . '/../header.php';
     <input type="password" class="form-control" id="passwordInput" name="password" placeholder="Password" required>
     <a href="/login" class="mx-auto"><small>Already have an account?</small></a>
     <button type="submit" class="btn btn-primary mt-3 mx-auto">Sign Up</button>
-    <label id="error"></label>
+    <label id="labelError" class="label mx-auto mt-3"></label>
   </div>
 </form>
 
@@ -38,17 +38,18 @@ include __DIR__ . '/../footer.php';
 
         fetchData('/user?username=' + data.get('username')).then((user) => {
             if (user) {
-                label.innerHTML = 'User already exists';
+                showErrorMessage('User already exists', label);
             } else {
                 postForm('/user', data).then((response) => {
                     window.location.href = '/login';
                 }).catch((error) => {
                     console.log(error);
-                    label.innerHTML = 'Error creating user';
+                    showErrorMessage('Error creating user', label);
                 });
             }
         }).catch((error) => {
             console.log(error);
+            showErrorMessage('Error creating user', label);
         });
     } 
 </script>

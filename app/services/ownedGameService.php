@@ -17,8 +17,12 @@ class OwnedGameService {
         return $this->ownedGameRepository->getOwnedGameByUserId($user_id);
     }
 
-    public function insert($user_id, $game_id) {
-        $this->ownedGameRepository->insert($user_id, $game_id);
+    public function getOwnedGameByUserIdAndGameId($user_id, $game_id) {
+        return $this->ownedGameRepository->getOwnedGameByUserIdAndGameId($user_id, $game_id);
+    }
+
+    public function insert($ownedGame) {
+        $this->ownedGameRepository->insert($ownedGame);
     }
 }
 

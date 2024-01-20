@@ -13,8 +13,8 @@ include __DIR__ . '/../header.php';
     <label for="password">Password</label>
     <input type="password" class="form-control" id="passwordInput" name="password" placeholder="Password" required>
     <a href="/signup" class="mx-auto"><small>Don't have a account?</small></a>
-    <button id="btnLogin" type="submit" class="btn btn-primary mt-3 mx-auto">Login</button>
-    <label id="error"></label>
+    <label id="labelError" class="label mx-auto"></label>
+    <button id="btnLogin" type="submit" class="btn btn-primary mx-auto">Login</button>
   </div>
 </form>
 
