@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: mysql
--- Generation Time: Jan 20, 2024 at 06:46 PM
+-- Generation Time: Jan 20, 2024 at 07:25 PM
 -- Server version: 11.2.2-MariaDB-1:11.2.2+maria~ubu2204
 -- PHP Version: 8.2.14
 
@@ -69,7 +69,9 @@ INSERT INTO `owned_game` (`id`, `user_id`, `game_id`) VALUES
 (4, 3, 3),
 (5, 2, 9),
 (6, 2, 7),
-(7, 2, 1);
+(7, 2, 1),
+(8, 10, 1),
+(9, 10, 9);
 
 -- --------------------------------------------------------
 
@@ -157,19 +159,19 @@ ALTER TABLE `game`
 -- AUTO_INCREMENT for table `owned_game`
 --
 ALTER TABLE `owned_game`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `wish_list`
 --
 ALTER TABLE `wish_list`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
